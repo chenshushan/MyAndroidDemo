@@ -14,8 +14,10 @@
         tools:showIn="@layout/activity_main"
         tools:context="com.example.chen.myapplication.MainActivity">
 
-    <TextView
+    <Button
+            android:text="布局"
+            android:onClick="btnTurnToLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"/>
+            android:layout_height="wrap_content" android:layout_below="@+id/button"
+            android:layout_alignStart="@+id/button" android:layout_marginTop="43dp" android:id="@+id/button3"/>
 </RelativeLayout>
