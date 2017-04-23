@@ -43,4 +43,12 @@ public class LayoutActivity extends AppCompatActivity {
 		Intent intent = new Intent(this, GridViewActivity.class);
 		startActivity(intent);
 	}
+	public void btnTurnToFrag(View v){
+		Intent intent = new Intent(this, FragmentActivity.class);
+		startActivity(intent);
+	}
+	public void btnTurnToBMenu(View v){
+		Intent intent = new Intent(this, BottomMenuActivity.class);
+		startActivity(intent);
+	}
 }

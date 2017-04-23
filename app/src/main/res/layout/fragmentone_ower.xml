@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <!--在需要加载Fragment的Activity对应的布局文件中添加fragment的标签-->
+    <fragment
+    android:id="@+id/fragment1"
+    android:name="com.example.chen.myapplication.layout.fragment.Fragmentone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1" />
+</LinearLayout>

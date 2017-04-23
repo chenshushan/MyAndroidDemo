@@ -21,7 +21,7 @@ public class FrameLayoutActivity extends AppCompatActivity {
 		setContentView(R.layout.framelayout_demo);
 		FrameLayout frame = (FrameLayout) findViewById(R.id.framelayout_demo);
 		final MyImageView mezi = new MyImageView(FrameLayoutActivity.this);
-		//为我们的萌妹子添加触摸事件监听器
+		//为MyImageView添加触摸事件监听器
 		mezi.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent event) {
