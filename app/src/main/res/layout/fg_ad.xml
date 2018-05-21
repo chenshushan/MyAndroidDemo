@@ -5,9 +5,9 @@
     android:background="@color/bg_white">
 
 
-    <TextView
-            android:text="ad"
-            android:textAlignment="center"
+    <com.youth.banner.Banner
+            android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/tx_ad"/>
+            android:layout_height="match_parent"
+              />
 </LinearLayout>

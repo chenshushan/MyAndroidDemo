@@ -56,14 +56,10 @@ public class AppActivity extends AppCompatActivity implements RadioGroup.OnCheck
 
 		viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
-			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-			}
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
 			@Override
-			public void onPageSelected(int position) {
-
-			}
+			public void onPageSelected(int position) {}
 			//重写ViewPager页面切换的处理方法
 			@Override
 			public void onPageScrollStateChanged(int state) {
