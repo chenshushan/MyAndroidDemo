@@ -40,6 +40,21 @@ public class ListViewActivity extends Activity implements AdapterView.OnItemClic
 		mData.add(new Animal("鸭说", "你是鸭么?", R.drawable.test));
 		mData.add(new Animal("鱼说", "你是鱼么?", R.drawable.test));
 		mData.add(new Animal("马说", "你是马么?", R.drawable.test));
+		mData.add(new Animal("狗说", "你是狗么?", R.drawable.test));
+		mData.add(new Animal("牛说", "你是牛么?", R.drawable.test));
+		mData.add(new Animal("鸭说", "你是鸭么?", R.drawable.test));
+		mData.add(new Animal("鱼说", "你是鱼么?", R.drawable.test));
+		mData.add(new Animal("马说", "你是马么?", R.drawable.test));
+		mData.add(new Animal("狗说", "你是狗么?", R.drawable.test));
+		mData.add(new Animal("牛说", "你是牛么?", R.drawable.test));
+		mData.add(new Animal("鸭说", "你是鸭么?", R.drawable.test));
+		mData.add(new Animal("鱼说", "你是鱼么?", R.drawable.test));
+		mData.add(new Animal("马说", "你是马么?", R.drawable.test));
+		mData.add(new Animal("狗说", "你是狗么?", R.drawable.test));
+		mData.add(new Animal("牛说", "你是牛么?", R.drawable.test));
+		mData.add(new Animal("鸭说", "你是鸭么?", R.drawable.test));
+		mData.add(new Animal("鱼说", "你是鱼么?", R.drawable.test));
+		mData.add(new Animal("马说", "你是马么?", R.drawable.test));
 		mAdapter = new AnimalAdapter((LinkedList<Animal>) mData, mContext);
 		//动态加载顶部View和底部View
 		final LayoutInflater inflater = LayoutInflater.from(this);
