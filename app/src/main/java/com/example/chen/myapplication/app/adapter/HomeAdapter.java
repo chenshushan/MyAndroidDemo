@@ -10,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.chen.myapplication.R;
+import com.example.chen.myapplication.app.bean.Shop;
 import com.example.chen.myapplication.app.fragment.ClassoneFragment;
 import com.example.chen.myapplication.app.fragment.ClasstwoFragment;
+import com.example.chen.myapplication.app.service.ShopService;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -37,21 +40,35 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
 	private RecyclerView mRv;
 
+	private ShopService shopService;
+
 
 	public HomeAdapter(Context context, FragmentManager manager) {
 		this.context = context;
 		mInflater = LayoutInflater.from(context);
 		this.manager = manager;
+		shopService = new ShopService();
+		list_shops = shopService.getShops();
 	}
 	@Override
 	public void onAttachedToRecyclerView(RecyclerView recyclerView) {
 		super.onAttachedToRecyclerView(recyclerView);
 		mRv = recyclerView;
 	}
-
+	@Override
+	public int getItemViewType(int position) {
+		if (position == 0) {
+			return 0;
+		}
+		if (position == 1) {
+			return 1;
+		} else {
+			return 2;
+		}
+	}
 	@Override
 	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		switch (viewType) {
+		switch (viewType) {// 根据自己覆写的getItemViewType得到
 			case 0 :
 				return new ADHolder(mInflater.inflate(R.layout.fg_ad, parent, false));
 			case 1 :
@@ -65,11 +82,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 	private List<String> list_path;
 	private List<String> list_title;
 
-	private List listShop;
+	private List<Shop> list_shops;
+
 
 	@Override
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-		Log.i("position", "position:" + position);
 		int itemViewType = getItemViewType(position);
 		switch (itemViewType) {
 			case 0 :
@@ -83,22 +100,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 				initClass(classHolder);
 				break;
 			case 2 :
-				if(listShop == null || listShop.size() == 0){
-					return;
-				}
-				final ShopHolder holder3 = (ShopHolder) holder;
+				final ShopHolder shopHolder = (ShopHolder) holder;
+				initShopList(shopHolder, position, list_shops);
 				break;
 		}
 	}
 
 	@Override
-	public int getItemViewType(int position) {
-		return position;
-	}
-
-	@Override
 	public int getItemCount() {
-		return listShop == null || listShop.size() == 0 ? 2 : listShop.size() + 2;
+		return list_shops == null ? 2 : list_shops.size() + 2;
 	}
 
 	@Override
@@ -128,18 +138,33 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 		}
 	}
 	class ShopHolder extends RecyclerView.ViewHolder{
-		TextView textView;
+
+		ImageView ivShopIcon; //店铺图片
+		TextView tvShopTitle; // 店铺名称
+		TextView tvShopSell;// 店铺已售份数
+		TextView tvShopDistance;// 距离
+		TextView tvShopFirst;// 首单立减
+		LinearLayout llShopShou;// 首单文字布局
+		TextView tvShopJian;// 满减
+		LinearLayout llShopJian; // 满减文字布局
+		TextView tvShopLowest;// 起送价格
+		TextView tvShopSend;// 配送费
+
 		public ShopHolder(View itemView) {
 			super(itemView);
-			textView = (TextView) itemView.findViewById(R.id.tx_shop);
-
+			ivShopIcon = (ImageView)itemView.findViewById(R.id.iv_shop_icon);
+			tvShopTitle = (TextView)itemView.findViewById(R.id.tv_shop_title);
+			tvShopSell = (TextView)itemView.findViewById(R.id.tv_shop_sell);
+			tvShopDistance = (TextView)itemView.findViewById(R.id.tv_shop_distance);
+			tvShopFirst = (TextView)itemView.findViewById(R.id.tv_shop_first);
+			llShopShou = (LinearLayout)itemView.findViewById(R.id.ll_shop_shoudan);
+			tvShopJian = (TextView)itemView.findViewById(R.id.tv_shop_jian);
+			llShopJian = (LinearLayout)itemView.findViewById(R.id.ll_shop_jian);
+			tvShopLowest = (TextView)itemView.findViewById(R.id.tv_shop_lowest);
+			tvShopSend = (TextView)itemView.findViewById(R.id.tv_shop_send);
 		}
 	}
 
-
-	public void initClassFragment(ClassHolder holder){
-
-	}
 
 	private class MyLoader extends ImageLoader {
 
@@ -221,5 +246,21 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 			}
 		});
 	}
+
+	public void initShopList(ShopHolder shopHolder, int position, List<Shop> shops){
+		Shop shop = shops.get(position - 2);
+		Picasso.with(context).load(shop.getPicUrl()).error(R.mipmap.log).placeholder(R.mipmap.log).into(shopHolder.ivShopIcon);
+		shopHolder.tvShopTitle.setText(shop.getName() + "饭店");
+		shopHolder.tvShopSell.setText("已售" + shop.getHasSell() + "份");
+		shopHolder.tvShopDistance.setText(shop.getDistance() + "km");
+		shopHolder.tvShopFirst.setText("首单立减" + String.format("%.0f", shop.getShoudan()));
+		String text = "满" + String.format("%.0f", shop.getFull()) + "减" + String.format("%.0f", shop.getJian());
+		shopHolder.tvShopJian.setText(text);
+
+		shopHolder.tvShopLowest.setText(String.format("%.0f", shop.getMinPrice()));
+		shopHolder.tvShopSend.setText(String.valueOf(shop.getPeisong()));
+
+	}
+
 
 }

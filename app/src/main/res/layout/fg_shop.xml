@@ -1,13 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/bg_black">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+    <!--分隔线-->
+    <View android:id="@+id/shop_fenge" android:layout_width="match_parent" android:layout_height="1dp"
+          android:background="@color/color_fengexian"></View>
+    <!--商品图片-->
+    <ImageView android:layout_width="90dp" android:layout_height="70dp" android:id="@+id/iv_shop_icon"
+               android:layout_marginLeft="10dp" android:layout_below="@+id/shop_fenge" android:layout_marginTop="10px"
+               android:src="@mipmap/log" android:scaleType="center"/>
+    <!--商品信息-->
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_alignTop="@+id/iv_shop_icon" android:layout_toRightOf="@+id/iv_shop_icon"
+                  android:layout_marginLeft="5dp" android:orientation="vertical">
 
-    <TextView
-            android:text="ad"
-            android:textAlignment="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/tx_shop"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="黄焖鸡" android:textColor="#000" android:lines="1" android:id="@+id/tv_shop_title"
+                  android:maxEms="6" android:textSize="18sp" android:ellipsize="end"/>
 
-</LinearLayout>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/tv_shop_sell" android:layout_marginTop="4dp"
+                  android:text="已售5份" android:textSize="14sp"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/tv_shop_distance" android:layout_marginTop="4dp" android:textSize="12sp"
+                  android:text="90.52千米"/>
+        <!--首单-->
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/ll_shop_shoudan" android:layout_marginTop="4dp" android:orientation="horizontal">
+            <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@mipmap/shou"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/tv_shop_first" android:layout_marginLeft="5dp" android:text="首单立减8"
+                      android:textSize="12sp"/>
+        </LinearLayout>
+        <!--满减    -->
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/ll_shop_jian" android:orientation="horizontal"
+                      android:layout_marginTop="4dp">
+            <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@mipmap/jian"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/tv_shop_jian" android:layout_marginLeft="5dp" android:text="在线支付满25减2"
+                      android:textSize="12sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_alignParentRight="true" android:layout_marginRight="10dp"
+                  android:gravity="right" android:orientation="vertical">
+        <!--起送-->
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_marginTop="10dp" android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="￥" android:textColor="@color/color_shop_text" android:textSize="13sp"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/tv_shop_lowest" android:layout_marginLeft="3dp"
+                      android:textColor="@color/color_shop_text"
+                      android:text="20" android:textSize="15sp" android:textStyle="bold"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_marginLeft="3dp" android:text="起送" android:textSize="12sp"
+            />
+        </LinearLayout>
+        <!--配送费-->
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp" android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="￥" android:textColor="@color/color_shop_text" android:textSize="13sp"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/tv_shop_send" android:layout_marginLeft="3dp"
+                      android:textColor="@color/color_shop_text"
+                      android:text="2" android:textSize="14sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_marginLeft="3dp" android:text="配送费" android:textSize="12sp"
+            />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
