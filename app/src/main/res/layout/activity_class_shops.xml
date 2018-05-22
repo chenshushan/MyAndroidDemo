@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.chen.myapplication.app.ClassShopActivity">
+
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RadioGroup android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            <RadioButton
+                    android:text="RadioButton"
+                    style="@style/ClassTypeStyle"
+                    android:id="@+id/radioButton2"
+            />
+            <RadioButton
+                    android:text="RadioButton"
+                    style="@style/ClassTypeStyle"
+                    android:id="@+id/radioButton"
+            />
+        </RadioGroup>
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+</LinearLayout>
