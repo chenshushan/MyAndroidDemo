@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" android:id="@+id/rl_shop_item">
     <!--分隔线-->
     <View android:id="@+id/shop_fenge" android:layout_width="match_parent" android:layout_height="1dp"
           android:background="@color/color_fengexian"></View>

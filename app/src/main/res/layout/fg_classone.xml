@@ -10,10 +10,10 @@
             android:orientation="horizontal"
             android:layout_margin="10dp">
         <!--一个image和一个view组成一个分类  4个分类构成一行-->
-        <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+        <RelativeLayout android:id="@+id/rl_class_one_fastfood"
+                        android:layout_width="0dp" android:clickable="true"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
             <ImageView
                     android:id="@+id/iv_class_one_fastfood"
@@ -21,7 +21,7 @@
                     android:layout_height="30dp"
                     android:layout_centerHorizontal="true"
                     android:clickable="true"
-                    android:onClick="onClick"
+
                     android:src="@mipmap/xiaochikuaican"/>
 
             <TextView
@@ -33,10 +33,10 @@
                     android:layout_marginTop="5dp"
                     android:text="小吃快餐"/>
         </RelativeLayout>
-        <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+        <RelativeLayout android:id="@+id/rl_class_one_chinese"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:clickable="true"
+                        android:layout_weight="1">
 
             <ImageView
                     android:id="@+id/iv_class_one_chinese"
@@ -44,7 +44,7 @@
                     android:layout_height="30dp"
                     android:layout_centerHorizontal="true"
                     android:clickable="true"
-                    android:onClick="onClick"
+
                     android:src="@mipmap/zhongshijiancan"/>
 
             <TextView
@@ -56,10 +56,10 @@
                     android:layout_marginTop="5dp"
                     android:text="中式简餐"/>
         </RelativeLayout>
-        <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+        <RelativeLayout android:id="@+id/rl_class_one_chicken"
+                        android:layout_width="0dp" android:clickable="true"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
             <ImageView
                     android:id="@+id/iv_class_one_chicken"
@@ -67,7 +67,7 @@
                     android:layout_height="30dp"
                     android:layout_centerHorizontal="true"
                     android:clickable="true"
-                    android:onClick="onClick"
+
                     android:src="@mipmap/zhajizhachuan1"/>
 
             <TextView
@@ -79,10 +79,10 @@
                     android:layout_marginTop="5dp"
                     android:text="炸鸡炸串"/>
         </RelativeLayout>
-        <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+        <RelativeLayout android:id="@+id/rl_class_one_noodle"
+                        android:layout_width="0dp" android:clickable="true"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
             <ImageView
                     android:id="@+id/iv_class_one_noodle"
@@ -90,7 +90,7 @@
                     android:layout_height="30dp"
                     android:layout_centerHorizontal="true"
                     android:clickable="true"
-                    android:onClick="onClick"
+
                     android:src="@mipmap/miantiaomixian1"/>
 
             <TextView
@@ -110,10 +110,10 @@
             android:orientation="horizontal"
             android:layout_margin="10dp"
     >
-        <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+        <RelativeLayout android:id="@+id/rl_class_one_place" android:clickable="true"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
             <ImageView
                     android:id="@+id/iv_class_one_place"
@@ -133,10 +133,10 @@
                     android:layout_marginTop="5dp"
                     android:text="地方小吃"/>
         </RelativeLayout>
-        <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+        <RelativeLayout android:id="@+id/rl_class_one_seafood"
+                        android:layout_width="0dp" android:clickable="true"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
             <ImageView
                     android:id="@+id/iv_class_one_seafood"
@@ -144,7 +144,6 @@
                     android:layout_height="30dp"
                     android:layout_centerHorizontal="true"
                     android:clickable="true"
-                    android:onClick="onClick"
                     android:src="@mipmap/haixianshaokao"/>
 
             <TextView
@@ -156,10 +155,10 @@
                     android:layout_marginTop="5dp"
                     android:text="海鲜烧烤"/>
         </RelativeLayout>
-        <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+        <RelativeLayout android:id="@+id/rl_class_one_fruit"  android:clickable="true"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
             <ImageView
                     android:id="@+id/iv_class_one_fruit"
@@ -167,7 +166,7 @@
                     android:layout_height="30dp"
                     android:layout_centerHorizontal="true"
                     android:clickable="true"
-                    android:onClick="onClick"
+
                     android:src="@mipmap/shuiguoshucai"/>
 
             <TextView
@@ -179,10 +178,10 @@
                     android:layout_marginTop="5dp"
                     android:text="水果蔬菜"/>
         </RelativeLayout>
-        <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+        <RelativeLayout android:id="@+id/rl_class_one_drink" android:clickable="true"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
             <ImageView
                     android:id="@+id/iv_class_one_drink"
@@ -190,7 +189,7 @@
                     android:layout_height="30dp"
                     android:layout_centerHorizontal="true"
                     android:clickable="true"
-                    android:onClick="onClick"
+
                     android:src="@mipmap/tianpinyinliao"/>
 
             <TextView

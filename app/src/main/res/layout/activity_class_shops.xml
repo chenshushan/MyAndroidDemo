@@ -7,29 +7,24 @@
         android:orientation="vertical"
         tools:context="com.example.chen.myapplication.app.ClassShopActivity">
 
+    <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent"
+                                                       android:id="@+id/tv_type_title"
+                                                       android:layout_height="wrap_content">
 
-    <LinearLayout
-            android:orientation="horizontal"
+    </com.example.chen.myapplication.app.view.TitleView>
+
+    <SearchView
+            android:id="@+id/sv_class_type"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <RadioGroup android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-            <RadioButton
-                    android:text="RadioButton"
-                    style="@style/ClassTypeStyle"
-                    android:id="@+id/radioButton2"
-            />
-            <RadioButton
-                    android:text="RadioButton"
-                    style="@style/ClassTypeStyle"
-                    android:id="@+id/radioButton"
-            />
-        </RadioGroup>
-
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_home"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:queryHint="请输入商家" />
+    <View android:layout_width="match_parent"
+          android:layout_height="10dp"
+          android:background="@color/color_fengexian"/>
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_class_type_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 </LinearLayout>

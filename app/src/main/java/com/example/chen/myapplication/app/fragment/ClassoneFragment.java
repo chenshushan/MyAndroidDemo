@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.ClassShopActivity;
 
@@ -31,21 +32,21 @@ public class ClassoneFragment extends Fragment {
 							 Bundle savedInstanceState) {
 		// Fragment直接在xml中使用onClick失效 使用这种方法注册点击事件
 		View view = inflater.inflate(R.layout.fg_classone, container, false);
-		ImageView one = (ImageView) view.findViewById(R.id.iv_class_one_fastfood);
+		RelativeLayout one = (RelativeLayout) view.findViewById(R.id.rl_class_one_fastfood);
 		one.setOnClickListener(new ClassClickListener());
-		ImageView two = (ImageView) view.findViewById(R.id.iv_class_one_chicken);
+		RelativeLayout two = (RelativeLayout) view.findViewById(R.id.rl_class_one_chinese);
 		two.setOnClickListener(new ClassClickListener());
-		ImageView three = (ImageView) view.findViewById(R.id.iv_class_one_noodle);
+		RelativeLayout three = (RelativeLayout) view.findViewById(R.id.rl_class_one_chicken);
 		three.setOnClickListener(new ClassClickListener());
-		ImageView four = (ImageView) view.findViewById(R.id.iv_class_one_place);
+		RelativeLayout four = (RelativeLayout) view.findViewById(R.id.rl_class_one_noodle);
 		four.setOnClickListener(new ClassClickListener());
-		ImageView five = (ImageView) view.findViewById(R.id.iv_class_one_seafood);
+		RelativeLayout five = (RelativeLayout) view.findViewById(R.id.rl_class_one_place );
 		five.setOnClickListener(new ClassClickListener());
-		ImageView six = (ImageView) view.findViewById(R.id.iv_class_one_fruit);
+		RelativeLayout six = (RelativeLayout) view.findViewById(R.id.rl_class_one_seafood );
 		six.setOnClickListener(new ClassClickListener());
-		ImageView seven = (ImageView) view.findViewById(R.id.iv_class_one_drink);
+		RelativeLayout seven = (RelativeLayout) view.findViewById(R.id.rl_class_one_fruit );
 		seven.setOnClickListener(new ClassClickListener());
-		ImageView eight = (ImageView) view.findViewById(R.id.iv_class_one_fastfood);
+		RelativeLayout eight = (RelativeLayout) view.findViewById(R.id.rl_class_one_drink);
 		eight.setOnClickListener(new ClassClickListener());
 		return view;
 	}
@@ -57,26 +58,29 @@ public class ClassoneFragment extends Fragment {
 			int id = view.getId();
 			String type = "";
 			switch (id){
-				case R.id.iv_class_one_chinese:
-					type = "2";
+				case R.id.rl_class_one_fastfood:
+					type = "小吃快餐";
 					break;
-				case R.id.iv_class_one_chicken:
-					type = "3";
+				case R.id.rl_class_one_chinese:
+					type = "中式简餐";
 					break;
-				case R.id.iv_class_one_noodle:
-					type = "4";
+				case R.id.rl_class_one_chicken:
+					type = "炸鸡炸串";
 					break;
-				case R.id.iv_class_one_place:
-					type = "5";
+				case R.id.rl_class_one_noodle:
+					type = "面条米线";
 					break;
-				case R.id.iv_class_one_seafood:
-					type = "6";
+				case R.id.rl_class_one_place:
+					type = "地方小吃";
 					break;
-				case R.id.iv_class_one_fruit:
-					type = "7";
+				case R.id.rl_class_one_seafood:
+					type = "海鲜烧烤";
 					break;
-				case R.id.iv_class_one_drink:
-					type = "8";
+				case R.id.rl_class_one_fruit:
+					type = "水果蔬菜";
+					break;
+				case R.id.rl_class_one_drink:
+					type = "甜点饮品";
 					break;
 			}
 

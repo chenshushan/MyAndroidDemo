@@ -27,7 +27,7 @@ import com.youth.banner.loader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnBannerListener {
+public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnBannerListener, View.OnClickListener {
 
 
 	private Context context;
@@ -41,6 +41,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 	private RecyclerView mRv;
 
 	private ShopService shopService;
+	private OnItemClickListener mOnItemClickListener;
 
 
 	public HomeAdapter(Context context, FragmentManager manager) {
@@ -84,9 +85,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
 	private List<Shop> list_shops;
 
+	public List<Shop> getList_shops() {
+		return list_shops;
+	}
 
 	@Override
-	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+	public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 		int itemViewType = getItemViewType(position);
 		switch (itemViewType) {
 			case 0 :
@@ -102,9 +106,35 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 			case 2 :
 				final ShopHolder shopHolder = (ShopHolder) holder;
 				initShopList(shopHolder, position, list_shops);
+				// 设置店铺的点击事件 触发实现的onClick  在其中调用mOnItemClickListener的click 在其他View中实现OnItemClickListener进行跳转
+				shopHolder.item.setOnClickListener(this);
 				break;
 		}
 	}
+
+	@Override
+	public void onClick(View view) {
+		if(mRv == null){
+			return;
+		}
+		int position = mRv.getChildAdapterPosition(view);
+		if(mOnItemClickListener != null) {
+			mOnItemClickListener.onItemClick(position - 2);
+		}
+	}
+
+	// recyclerview的点击事件 在ClassShopActivity中实现 在接口方法中使用Intent跳转
+	// 在holder的点击事件中 回调该接口
+	public interface OnItemClickListener {
+		void onItemClick(int position);
+	}
+
+	//点击的方法
+	public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+		this.mOnItemClickListener = mOnItemClickListener;
+	}
+
+
 
 	@Override
 	public int getItemCount() {
@@ -137,7 +167,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 			ivClassTwo = (ImageView) itemView.findViewById(R.id.iv_class_two);
 		}
 	}
-	class ShopHolder extends RecyclerView.ViewHolder{
+	public static class ShopHolder extends RecyclerView.ViewHolder{
 
 		ImageView ivShopIcon; //店铺图片
 		TextView tvShopTitle; // 店铺名称
@@ -149,7 +179,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 		LinearLayout llShopJian; // 满减文字布局
 		TextView tvShopLowest;// 起送价格
 		TextView tvShopSend;// 配送费
-
+		View item;
 		public ShopHolder(View itemView) {
 			super(itemView);
 			ivShopIcon = (ImageView)itemView.findViewById(R.id.iv_shop_icon);
@@ -162,6 +192,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 			llShopJian = (LinearLayout)itemView.findViewById(R.id.ll_shop_jian);
 			tvShopLowest = (TextView)itemView.findViewById(R.id.tv_shop_lowest);
 			tvShopSend = (TextView)itemView.findViewById(R.id.tv_shop_send);
+			item = itemView;
+		}
+
+		public View getItem() {
+			return item;
 		}
 	}
 
@@ -261,6 +296,16 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 		shopHolder.tvShopSend.setText(String.valueOf(shop.getPeisong()));
 
 	}
-
+	//店铺数据
+	public void setShopData(List<Shop> data, boolean isRefresh) {
+		if (this.list_shops == null) {
+			this.list_shops = new ArrayList<>();
+		}
+		if (isRefresh) {
+			this.list_shops.clear();
+		}
+		this.list_shops.addAll(data);
+		notifyDataSetChanged();
+	}
 
 }
