@@ -65,8 +65,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemClickLis
 	public void onItemClick(int position) {
 		Intent intent = new Intent(getActivity(), ShopDetailActivity.class);
 		Shop shop = homeAdapterTemp.getList_shops().get(position);
-		intent.putExtra("cartID",shop.getId());
-		intent.putExtra("lowPrice",shop.getMinPrice());
+		intent.putExtra("shop",shop);
 		startActivity(intent);
 	}
 }

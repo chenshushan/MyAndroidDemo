@@ -5,9 +5,22 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f2f2f2"
+        android:background="#f2f2f2" android:id="@+id/shrop_containerLayout"
         tools:context="com.example.chen.myapplication.app.ShopDetailActivity">
 
+    <!--店铺详情页-->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="vertical" android:layout_above="@+id/shopcar_bottom">
+
+        <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent"
+                                                           android:id="@+id/tv_shop_title"
+                                                           android:layout_height="wrap_content">
+        </com.example.chen.myapplication.app.view.TitleView>
+        <include layout="@layout/layout_mian_shopping_cart"
+                 android:layout_width="match_parent"
+
+                 android:layout_height="match_parent"/>
+    </LinearLayout>
 
     <LinearLayout
             android:orientation="horizontal"
@@ -45,7 +58,8 @@
                   android:layout_marginRight="10dp" android:visibility="gone"
                   android:gravity="center"
                   android:layout_height="match_parent"/>
-        <TextView android:textColor="#fff" android:background="#22c222" android:clickable="true" android:visibility="gone"
+        <TextView android:textColor="#fff" android:background="#22c222" android:clickable="true"
+                  android:visibility="gone"
                   android:text="去结算" android:textSize="18sp" android:gravity="center"
                   android:layout_width="120dp"
                   android:layout_height="match_parent" android:id="@+id/tvSubmit"/>

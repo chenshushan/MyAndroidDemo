@@ -1,10 +1,11 @@
 package com.example.chen.myapplication.app.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Shop {
+public class Shop implements Serializable {
 
 	// 主键
 	private int id;
@@ -209,7 +210,7 @@ public class Shop {
 		this.id = id;
 	}
 
-	private static List<String> shopImg = new ArrayList();
+	public static List<String> shopImg = new ArrayList();
 	static {
 		shopImg.add("http://wm.gou00.cn/api.php?r=/image/get&appcode=9373224c982cc891befc4788cf3548b9&token=18d279d1faaac72a89fe06af13fa7ecb&width=265&height=160&view=image&id=4429");
 		shopImg.add("http://wm.gou00.cn/api.php?r=/image/get&appcode=9373224c982cc891befc4788cf3548b9&token=18d279d1faaac72a89fe06af13fa7ecb&width=265&height=160&view=image&id=7250");
