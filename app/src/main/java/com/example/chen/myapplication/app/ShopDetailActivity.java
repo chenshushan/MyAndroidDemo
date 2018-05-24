@@ -9,6 +9,7 @@ import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import java.util.List;
 
-public class ShopDetailActivity extends AppCompatActivity {
+public class ShopDetailActivity extends AppCompatActivity implements View.OnClickListener{
 	private ImageView imgCart; // 购物车图片
 	private ViewGroup containerLayout; // 顶层布局
 	private RecyclerView rvType; // 左侧类别列表
@@ -43,15 +44,15 @@ public class ShopDetailActivity extends AppCompatActivity {
 	private List<GoodsItem> dataList, typeList;
 
 	//购买的商品（类似Map）
-	private SparseArray<GoodsItem> selectedList;
-	private SparseIntArray groupSelect;
+	private SparseArray<GoodsItem> selectedList; // 每种商品的数量
+	private SparseIntArray groupSelect; // 每种类别的数量
 
 	//一级界面的店铺id
 	private String id;
 	//一级界面的店铺配送费
 	private String lowPrice;
 	private String shopName;
-
+	GoodsAdapter goodsAdapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -95,11 +96,146 @@ public class ShopDetailActivity extends AppCompatActivity {
 		bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomSheetLayout);
 
 		listViewFoods = (StickyListHeadersListView) findViewById(R.id.itemListView);
-
+		// 左侧类别初始化
 		rvType.setLayoutManager(new LinearLayoutManager(this));
-		rvType.setAdapter(new ShopTypeAdapter(this, typeList));
+		final ShopTypeAdapter shopTypeAdapter = new ShopTypeAdapter(this, typeList);
+		rvType.setAdapter(shopTypeAdapter);
 
-		GoodsAdapter goodsAdapter = new GoodsAdapter(this, dataList);
+		goodsAdapter = new GoodsAdapter(this, dataList);
 		listViewFoods.setAdapter(goodsAdapter);
+
+		listViewFoods.setOnScrollListener(new AbsListView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView absListView, int i) {
+
+			}
+			// 点击左侧滑动也会调用此方法
+			@Override
+			public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				if(dataList == null || dataList.size() == 0) {
+					return;
+				}
+				GoodsItem goodsItem = dataList.get(firstVisibleItem);
+				if (shopTypeAdapter.selectTypeId != goodsItem.typeId) {
+					shopTypeAdapter.selectTypeId = goodsItem.typeId;
+					shopTypeAdapter.notifyDataSetChanged(); // 触发onBindViewHolder 会设置点击项的背景色
+					rvType.smoothScrollToPosition(getSelectedGroupPosition(goodsItem.typeId));
+				}
+
+			}
+		});
+	}
+
+	/** 得到选中左侧选中类别的位置
+	 * @param typeId
+	 * @return
+	 */
+	private int getSelectedGroupPosition(int typeId) {
+		for (int i = 0; i < typeList.size(); i++) {
+			if (typeId == typeList.get(i).typeId) {
+				return i;
+			}
+		}
+		return 0;
+	}
+
+	public void onTypeClicked(int typeId) {
+		// 点击类别之后触发滚动onScroll事件
+		listViewFoods.setSelection(getSelectedPosition(typeId));
+	}
+
+	/** 得到左侧选中的是哪个类别
+	 * @param typeId
+	 * @return
+	 */
+	private int getSelectedPosition(int typeId) {
+		int position = 0;
+		for (int i = 0; i < dataList.size(); i++) {
+			if (dataList.get(i).typeId == typeId) {
+				position = i;
+				break;
+			}
+		}
+		return position;
+	}
+
+	//根据商品id获取当前商品的采购数量
+	public int getSelectedItemCountById(int id) {
+		GoodsItem temp = selectedList.get(id);
+		if (temp == null) {
+			return 0;
+		}
+		return temp.count;
+	}
+
+	public void addFood(GoodsItem item, boolean refresh){
+		int groupCount = groupSelect.get(item.typeId);
+		if(groupCount == 0) {
+			groupSelect.append(item.typeId, 1);
+		}else {
+			groupSelect.append(item.typeId, ++groupCount);
+		}
+
+		GoodsItem temp = selectedList.get(item.id);
+		if(temp == null){
+			item.count = 1;
+			selectedList.append(item.id, item);
+		}else {
+			temp.count++;
+		}
+		update(refresh);
+	}
+	//刷新布局 总价、购买数量等
+	private void update(boolean refresh) {
+		int size = selectedList.size();
+		int count = 0;
+		double cost = 0;
+		// 计算总价
+		for (int i = 0; i < size; i++) {
+			GoodsItem item = selectedList.valueAt(i);
+			count += item.count;
+			cost += item.count * item.price;
+		}
+
+		if (count < 1) { // 隐藏数量
+			tvCount.setVisibility(View.GONE);
+		} else {
+			tvCount.setVisibility(View.VISIBLE);
+		}
+		tvCount.setText(String.valueOf(count));
+
+		//购物车 配送费判断
+		if (cost >= Double.valueOf(lowPrice)) {
+			tvTips.setVisibility(View.GONE);
+			tvSubmit.setVisibility(View.VISIBLE);
+		} else {
+			tvSubmit.setVisibility(View.GONE);
+			tvTips.setVisibility(View.VISIBLE);
+		}
+
+		tvCost.setText(String.format("%.2f",cost));
+
+		if (goodsAdapter != null && refresh) {
+			goodsAdapter.notifyDataSetChanged();
+		}
+
+//		if (selectAdapter != null) {
+//			selectAdapter.notifyDataSetChanged();
+//		}
+//		if (typeAdapter != null) {
+//			typeAdapter.notifyDataSetChanged();
+//		}
+//		if (bottomSheetLayout.isSheetShowing() && selectedList.size() < 1) {
+//			bottomSheetLayout.dismissSheet();
+//		}
+//
+
+	}
+
+
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+		}
 	}
 }

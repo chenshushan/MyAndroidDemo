@@ -1,6 +1,5 @@
 package com.example.chen.myapplication.app.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +74,7 @@ public class GoodsAdapter extends BaseAdapter implements StickyListHeadersAdapte
 		return view;
 	}
 
-	class ItemViewHolder {
+	class ItemViewHolder implements View.OnClickListener {
 		private TextView name,price,tvAdd,tvMinus,tvCount;
 		private GoodsItem item;
 		private RatingBar ratingBar;
@@ -108,5 +107,21 @@ public class GoodsAdapter extends BaseAdapter implements StickyListHeadersAdapte
 			}
 		}
 
+		@Override
+		public void onClick(View view) {
+			ShopDetailActivity activity = context;
+			switch (view.getId()) {
+				case R.id.tvAdd : { // 添加菜品添加圆钮
+					int foodCount = activity.getSelectedItemCountById(item.id);
+					if(foodCount < 1) { // // 当数量为0时，点击添加后显示减号圆钮和数量
+						tvMinus.setVisibility(View.VISIBLE);
+						tvCount.setVisibility(View.VISIBLE);
+					}
+
+				}
+			}
+
+
+		}
 	}
 }

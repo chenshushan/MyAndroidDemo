@@ -3,6 +3,7 @@
                 android:layout_width="match_parent"
                 android:clickable="true"
                 android:layout_height="50dp">
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,4 +23,7 @@
               android:background="@drawable/circle_red"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content" />
+    <!--分隔线-->
+    <View android:id="@+id/shop_fenge" android:layout_width="match_parent" android:layout_height="1dp"
+          android:background="@color/color_fengexian"></View>
 </RelativeLayout>
