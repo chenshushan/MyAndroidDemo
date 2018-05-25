@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.adapter.GoodsAdapter;
+import com.example.chen.myapplication.app.adapter.GoodsSelectedAdapter;
 import com.example.chen.myapplication.app.adapter.ShopTypeAdapter;
 import com.example.chen.myapplication.app.bean.GoodsItem;
 import com.example.chen.myapplication.app.bean.Shop;
@@ -50,9 +52,12 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 	//一级界面的店铺id
 	private String id;
 	//一级界面的店铺配送费
-	private String lowPrice;
-	private String shopName;
-	GoodsAdapter goodsAdapter;
+	private String lowPrice; // 起送价
+	private String shopName; // 店铺名称
+	GoodsAdapter goodsAdapter; // 右侧菜品adapter
+	ShopTypeAdapter shopTypeAdapter; // 左侧类别adapter
+	GoodsSelectedAdapter selectedAdapter; // 底部购物车已选菜品adapter
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -98,7 +103,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 		listViewFoods = (StickyListHeadersListView) findViewById(R.id.itemListView);
 		// 左侧类别初始化
 		rvType.setLayoutManager(new LinearLayoutManager(this));
-		final ShopTypeAdapter shopTypeAdapter = new ShopTypeAdapter(this, typeList);
+		shopTypeAdapter = new ShopTypeAdapter(this, typeList);
 		rvType.setAdapter(shopTypeAdapter);
 
 		goodsAdapter = new GoodsAdapter(this, dataList);
@@ -159,6 +164,11 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 		return position;
 	}
 
+	//根据类别Id获取属于当前类别的数量
+	public int getSelectedGroupCountByTypeId(int typeId) {
+		return groupSelect.get(typeId);
+	}
+
 	//根据商品id获取当前商品的采购数量
 	public int getSelectedItemCountById(int id) {
 		GoodsItem temp = selectedList.get(id);
@@ -168,6 +178,10 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 		return temp.count;
 	}
 
+	/**
+	 * @param item
+	 * @param refresh false:点击商品添加时不用刷新商品item  true:点击购物车添加减少时需要刷新商品item
+	 */
 	public void addFood(GoodsItem item, boolean refresh){
 		int groupCount = groupSelect.get(item.typeId);
 		if(groupCount == 0) {
@@ -185,6 +199,28 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 		}
 		update(refresh);
 	}
+
+	// 移除商品
+	public void removeFood(GoodsItem item, boolean refresh){
+
+		int groupCount = groupSelect.get(item.typeId);
+		if(groupCount == 1) {
+			groupSelect.delete(item.typeId);
+		} else {
+			groupSelect.append(item.typeId, --groupCount);
+		}
+
+		GoodsItem temp = selectedList.get(item.id);
+		if(temp != null) {
+			if(temp.count < 2) {
+				selectedList.remove(item.id);
+			} else {
+				item.count--;
+			}
+		}
+		update(refresh);
+	}
+
 	//刷新布局 总价、购买数量等
 	private void update(boolean refresh) {
 		int size = selectedList.size();
@@ -215,27 +251,75 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
 		tvCost.setText(String.format("%.2f",cost));
 
+		// 刷新菜品列表的数量显示
 		if (goodsAdapter != null && refresh) {
 			goodsAdapter.notifyDataSetChanged();
 		}
-
-//		if (selectAdapter != null) {
-//			selectAdapter.notifyDataSetChanged();
-//		}
-//		if (typeAdapter != null) {
-//			typeAdapter.notifyDataSetChanged();
-//		}
-//		if (bottomSheetLayout.isSheetShowing() && selectedList.size() < 1) {
-//			bottomSheetLayout.dismissSheet();
-//		}
-//
+		// 刷新底部购物车
+		if (selectedAdapter != null) {
+			selectedAdapter.notifyDataSetChanged();
+		}
+		// 刷新左侧分类列表的数量显示
+		if (shopTypeAdapter != null) {
+			shopTypeAdapter.notifyDataSetChanged();
+		}
+		// 如果没有选中的菜品了 隐藏弹出的购物车
+		if (bottomSheetLayout.isSheetShowing() && selectedList.size() < 1) {
+			bottomSheetLayout.dismissSheet();
+		}
 
 	}
 
 
 	@Override
-	public void onClick(View view) {
+	public void onClick(View view) { // 页面元素绑定了点击事件
 		switch (view.getId()) {
+			case R.id.shopcar_bottom:  // 点击底部 弹出购物车
+				showBottomSheet();
+			break;
+			case R.id.clear:
+				clearCart();
+				break;
+			case R.id.tvSubmit:{ //结算
+
+			}
+			break;
+
 		}
+	}
+	// 弹出底部购物车
+	private void showBottomSheet() {
+		if(bottomSheet == null) {
+			bottomSheet = createBottomSheetView();
+		}
+		if(bottomSheetLayout.isSheetShowing()){ // 如果是显示的 点击之后隐藏
+			bottomSheetLayout.dismissSheet();
+		}else {
+			if(selectedList.size() != 0) { // 如果是隐藏的 点击之后需要有选中菜品才弹出
+				bottomSheetLayout.showWithSheetView(bottomSheet);
+			}
+		}
+	}
+
+	// 创建底部购物车View
+	private View createBottomSheetView() {
+
+		View view = LayoutInflater.from(this).inflate(R.layout.layout_bottom_sheet, (ViewGroup) getWindow().getDecorView(), false);
+		rvSelected = (RecyclerView) view.findViewById(R.id.selectRecyclerView); // 购物车商品列表
+		rvSelected.setLayoutManager(new LinearLayoutManager(this));
+		selectedAdapter = new GoodsSelectedAdapter(this, selectedList);
+		rvSelected.setAdapter(selectedAdapter);
+
+
+		TextView clear = (TextView) view.findViewById(R.id.clear);
+		clear.setOnClickListener(this);
+		return view;
+	}
+
+	//清空购物车
+	public void clearCart() {
+		selectedList.clear();
+		groupSelect.clear();
+		update(true);
 	}
 }

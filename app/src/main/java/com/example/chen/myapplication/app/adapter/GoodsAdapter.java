@@ -88,16 +88,24 @@ public class GoodsAdapter extends BaseAdapter implements StickyListHeadersAdapte
 			tvAdd = (TextView) itemView.findViewById(R.id.tvAdd);
 			ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
 			img = (ImageView) itemView.findViewById(R.id.img);
+
+
+			tvMinus.setOnClickListener(this);
+			tvAdd.setOnClickListener(this);
 		}
 
 		public void bindData(GoodsItem item){
 			this.item = item;
 			name.setText(item.name);
 			ratingBar.setRating(item.rating);
-			item.count = 2;
+			// 获取已经选择的商品数量
+			item.count = context.getSelectedItemCountById(item.id);
+
 			tvCount.setText(String.valueOf(item.count));
 			price.setText(String.format("%.0f",item.price));
 			Picasso.with(context).load(item.img).into(img);
+
+			// 在添加或移除菜品之后控制右侧菜品列表数量小红点和减号的显示与隐藏
 			if(item.count<1){
 				tvCount.setVisibility(View.GONE);
 				tvMinus.setVisibility(View.GONE);
@@ -111,14 +119,29 @@ public class GoodsAdapter extends BaseAdapter implements StickyListHeadersAdapte
 		public void onClick(View view) {
 			ShopDetailActivity activity = context;
 			switch (view.getId()) {
-				case R.id.tvAdd : { // 添加菜品添加圆钮
+				case R.id.tvAdd : { // 添加菜品加号圆钮
 					int foodCount = activity.getSelectedItemCountById(item.id);
 					if(foodCount < 1) { // // 当数量为0时，点击添加后显示减号圆钮和数量
 						tvMinus.setVisibility(View.VISIBLE);
 						tvCount.setVisibility(View.VISIBLE);
 					}
-
+					activity.addFood(item, false);// 添加商品
+					foodCount++;
+					tvCount.setText(String.valueOf(foodCount)); // 设置商品item数量
 				}
+				break;
+				case R.id.tvMinus : { // 移除菜品减号圆钮
+					int count = activity.getSelectedItemCountById(item.id);
+					if(count < 2) {
+						tvMinus.setVisibility(View.GONE);
+						tvCount.setVisibility(View.GONE);
+					}
+					count--;
+					activity.removeFood(item, false);
+					tvCount.setText(String.valueOf(count));
+				}
+				break;
+
 			}
 
 

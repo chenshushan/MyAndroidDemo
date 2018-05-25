@@ -21,7 +21,7 @@ import com.example.chen.myapplication.app.view.TitleView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+// 店铺分类的列表页
 public class ClassShopActivity extends AppCompatActivity implements HomeAdapter.OnItemClickListener {
 
 	SearchView searchView;
@@ -118,8 +118,7 @@ public class ClassShopActivity extends AppCompatActivity implements HomeAdapter.
 		Intent intent = new Intent(this, ShopDetailActivity.class);
 
 		Shop shop = classTypeAdatperTemp.list_shops.get(position);
-		intent.putExtra("cartID",shop.getId());
-		intent.putExtra("lowPrice",shop.getMinPrice());
+		intent.putExtra("shop",shop);
 		startActivity(intent);
 	}
 

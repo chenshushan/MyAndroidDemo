@@ -60,6 +60,15 @@ public class ShopTypeAdapter extends RecyclerView.Adapter {
 			}   else {// 取消背景色
 				itemView.setBackgroundColor(Color.TRANSPARENT);
 			}
+			// 在添加或移除菜品之后控制左侧种类列表数量小红点的显示与隐藏
+			int count = context.getSelectedGroupCountByTypeId(item.typeId);
+			tvCount.setText(String.valueOf(count));
+			if(count<1){
+				tvCount.setVisibility(View.GONE);
+			}else{
+				tvCount.setVisibility(View.VISIBLE);
+			}
+
 		}
 		
 		@Override
