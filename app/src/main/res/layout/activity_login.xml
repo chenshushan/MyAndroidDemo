@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eeeeee">
+    <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content" android:id="@+id/login_titel"></com.example.chen.myapplication.app.view.TitleView>
+
+    <LinearLayout android:focusable="true"
+                  android:focusableInTouchMode="true"
+            android:id="@+id/ll_loginactivity_two"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_below="@+id/login_titel"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+        <EditText
+                android:id="@+id/et_login_username"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:hint="手机／邮箱／用户名"/>
+        <EditText
+                android:id="@+id/et_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:hint="登录密码"
+                android:inputType="textPassword"
+        />
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/bt_loginactivity_login"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/ll_loginactivity_two"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/selector_activity_button"
+            android:text="登录"
+            android:layout_centerInParent="true"
+            android:textColor="#fff"
+            android:onClick="login"
+            android:layout_marginTop="10dp"/>
+
+</RelativeLayout>
