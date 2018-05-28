@@ -74,6 +74,14 @@
         </activity>
         <activity android:name=".app.ShopDetailActivity">
         </activity>
+        <activity android:name=".app.SettlementActivity">
+        </activity>
+        <activity android:name=".app.MyAddressActivity">
+        </activity>
+        <activity android:name=".app.MyCenterActivity">
+        </activity>
+        <activity android:name=".app.AddAddressActivity">
+        </activity>
     </application>
 
 </manifest>

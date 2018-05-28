@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.chen.myapplication.app.SettlementActivity" >
+
+    <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent" android:id="@+id/title"
+                                                       android:layout_height="wrap_content">
+    </com.example.chen.myapplication.app.view.TitleView>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_above="@+id/order_bottom"
+                  android:orientation="vertical">
+        <RelativeLayout android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp" android:visibility="gone" android:id="@+id/rl_address_select"
+                        android:clickable="true">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请选择一个收货地址"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/text_black"
+                    android:id="@+id/checkout_one_tv"/>
+
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/arrow_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/btn_numpicker_press"
+                    android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:id="@+id/ll_address_msg"
+                      android:orientation="vertical">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                <TextView
+                        android:text="顾客姓名" android:layout_centerVertical="true" android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content" android:textColor="@color/text_black"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:text="小明" android:layout_alignParentRight="true" android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="wrap_content" android:textSize="15sp"
+                        android:layout_height="wrap_content" android:id="@+id/tv_customer_name"/>
+            </RelativeLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@color/btn_numpicker_press"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                <TextView
+                        android:text="联系电话" android:layout_centerVertical="true" android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content" android:textColor="@color/text_black"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:text="18951221234" android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="wrap_content" android:textSize="15sp"
+                        android:layout_height="wrap_content" android:id="@+id/tv_customer_phone"/>
+            </RelativeLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@color/btn_numpicker_press"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                <TextView
+                        android:text="送货地址" android:layout_centerVertical="true" android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content" android:textColor="@color/text_black"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:text="成都市天府新区是打发打发瑟瑟发抖180号" android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="wrap_content" android:textSize="12sp"
+                        android:layout_height="wrap_content" android:id="@+id/tv_customer_address"/>
+            </RelativeLayout>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/btn_numpicker_press"/>
+        </LinearLayout>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+            <TextView
+                    android:text="送达时间" android:layout_centerVertical="true" android:layout_marginLeft="10dp"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content" android:textColor="@color/text_black"
+                    android:layout_height="wrap_content" />
+            <TextView
+                    android:text="尽快送达" android:layout_alignParentRight="true" android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content" android:textSize="15sp"
+                    android:layout_height="wrap_content" android:id="@+id/tv_customer_sendtime"/>
+        </RelativeLayout>
+
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/btn_numpicker_press"/>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+            <EditText
+                    android:id="@+id/et_order_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:hint="订单备注"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp" />
+        </RelativeLayout>
+
+
+        <View android:layout_width="match_parent"
+              android:layout_height="15dp"
+              android:background="@color/btn_numpicker_press"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+            <TextView
+                    android:text="配送费" android:layout_centerVertical="true" android:layout_marginLeft="10dp"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content" android:textColor="@color/text_black"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:text="￥3" android:layout_alignParentRight="true" android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content" android:textSize="15sp"
+                    android:layout_height="wrap_content" android:id="@+id/tv_order_send"/>
+        </RelativeLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/rv_goods"/>
+    </LinearLayout>
+    <RelativeLayout android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" android:background="@color/divider_gray" android:id="@+id/order_bottom">
+
+        <TextView
+                android:text="￥45" android:textSize="20sp" android:textColor="@color/color_red"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content" android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content" android:id="@+id/order_total"/>
+        <TextView android:layout_alignParentRight="true"
+                  android:text="提交订单" android:layout_centerVertical="true" android:textColor="@color/white"
+                  android:layout_width="wrap_content" android:background="@color/color_shop_text"
+                  android:layout_height="match_parent" android:id="@+id/textView3"
+                  android:paddingLeft="20dp" android:gravity="center" android:textSize="18sp"
+                  android:paddingRight="20dp"/>
+    </RelativeLayout>
+</RelativeLayout>

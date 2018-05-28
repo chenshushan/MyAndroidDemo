@@ -22,10 +22,11 @@ import com.example.chen.myapplication.app.bean.GoodsItem;
 import com.example.chen.myapplication.app.bean.Shop;
 import com.example.chen.myapplication.app.view.TitleView;
 import com.flipboard.bottomsheet.BottomSheetLayout;
+import com.google.gson.Gson;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import java.util.List;
-
+// 店铺详情页
 public class ShopDetailActivity extends AppCompatActivity implements View.OnClickListener{
 	private ImageView imgCart; // 购物车图片
 	private ViewGroup containerLayout; // 顶层布局
@@ -57,13 +58,13 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 	GoodsAdapter goodsAdapter; // 右侧菜品adapter
 	ShopTypeAdapter shopTypeAdapter; // 左侧类别adapter
 	GoodsSelectedAdapter selectedAdapter; // 底部购物车已选菜品adapter
-
+	Shop shop; // 店铺信息
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shop_detail);
 		Intent intent = getIntent();
-		Shop shop = (Shop) intent.getSerializableExtra("shop");
+		shop = (Shop) intent.getSerializableExtra("shop");
 		id = String.valueOf(shop.getId());
 		shopName = shop.getName();
 		lowPrice = String.format("%.0f", shop.getMinPrice()) ;
@@ -96,7 +97,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 		titleView = (TitleView) findViewById(R.id.tv_shop_title);
 		titleView.setTitleText(shopName);
 		imgCart = (ImageView) findViewById(R.id.imgCart);
-
+		tvSubmit.setOnClickListener(this);
 		containerLayout = (RelativeLayout) findViewById(R.id.shrop_containerLayout);
 		bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomSheetLayout);
 
@@ -240,7 +241,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 		}
 		tvCount.setText(String.valueOf(count));
 
-		//购物车 配送费判断
+		//购物车 配送费判断 结算按钮显示隐藏
 		if (cost >= Double.valueOf(lowPrice)) {
 			tvTips.setVisibility(View.GONE);
 			tvSubmit.setVisibility(View.VISIBLE);
@@ -281,7 +282,15 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 				clearCart();
 				break;
 			case R.id.tvSubmit:{ //结算
+				Intent intent = new Intent(this, SettlementActivity.class);
+				Gson gson = new Gson();
 
+				String json = gson.toJson(selectedList);
+				String shopJson = gson.toJson(shop);
+
+				intent.putExtra("data", json);
+				intent.putExtra("shopJson", shopJson);
+				startActivity(intent);
 			}
 			break;
 

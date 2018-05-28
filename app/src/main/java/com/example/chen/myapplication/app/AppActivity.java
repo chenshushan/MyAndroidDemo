@@ -14,7 +14,7 @@ import com.example.chen.myapplication.app.fragment.OrderFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// 主页
 public class AppActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener{
 
 	ViewPager viewPager;

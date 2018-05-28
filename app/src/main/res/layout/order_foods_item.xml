@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="40dp">
+
+        <TextView
+                android:text="小鸡炖蘑菇" android:layout_centerVertical="true" android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                android:layout_width="wrap_content" android:textColor="@color/text_black"
+                android:layout_height="wrap_content" android:id="@+id/food_name"/>
+        <TextView
+                android:text="x3" android:layout_centerVertical="true" android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                android:layout_width="wrap_content" android:textColor="@color/text_black" android:layout_toLeftOf="@+id/food_cost"
+                android:layout_height="wrap_content" android:layout_marginRight="100dp" android:id="@+id/food_count"/>
+        <TextView
+                android:text="¥30" android:layout_alignParentRight="true" android:layout_centerVertical="true"
+                android:layout_marginRight="10dp" android:textColor="@color/color_red"
+                android:layout_width="wrap_content" android:textSize="15sp"
+                android:layout_height="wrap_content" android:id="@+id/food_cost"/>
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/btn_numpicker_press"/>
+</RelativeLayout>

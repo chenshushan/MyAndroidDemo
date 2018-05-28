@@ -1,12 +1,102 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.example.chen.myapplication.app.fragment.MineFragment">
+    <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content"></com.example.chen.myapplication.app.view.TitleView>
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="mine"/>
+    <RelativeLayout android:background="@color/colorPrimaryDark" android:id="@+id/rl_mine_top"
+            android:layout_width="match_parent" android:paddingBottom="50dp"
+            android:layout_height="wrap_content">
 
-</FrameLayout>
+        <TextView
+                android:id="@+id/tv_minefragment_register_or_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginTop="60dp"
+                android:text="登陆／注册"
+                android:textColor="#fff"
+                android:clickable="true"
+        />
+        <ImageView android:layout_alignLeft="@+id/tv_minefragment_register_or_login" android:layout_marginTop="10dp"
+                android:src="@mipmap/ic_main_my_phone" android:layout_below="@+id/tv_minefragment_register_or_login"
+                android:layout_width="wrap_content" android:background="@mipmap/ic_main_my_phone"
+                android:layout_height="wrap_content" android:id="@+id/iv_minefragment_phone"/>
+        <TextView
+                android:id="@+id/tv_minefragment_enjoy_priority"
+                android:layout_width="wrap_content" android:layout_below="@+id/tv_minefragment_register_or_login"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/iv_minefragment_phone"
+                android:text="登陆后可享受更多特权"
+                android:textColor="#fff" />
+        <ImageView
+                android:id="@+id/iv_minefragment_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/arrow_right_white"
+                android:clickable="true"
+                android:layout_alignTop="@+id/iv_minefragment_phone"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+        />
+    </RelativeLayout>
+
+
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@+id/rl_mine_top" android:id="@+id/ll_list"
+                  android:orientation="vertical">
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/btn_numpicker_press"/>
+        <RelativeLayout  android:gravity="center_vertical" android:paddingTop="10dp" android:clickable="true"
+                android:layout_width="match_parent" android:id="@+id/rl_my_center"
+                android:layout_height="50dp" >
+
+            <TextView
+                    android:text="个人信息" android:layout_gravity="center_vertical" android:layout_marginLeft="20dp"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content" android:textColor="#424242"
+                    android:layout_height="wrap_content"/>
+
+
+            <ImageView android:src="@mipmap/ic_arrow_right"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"  android:layout_alignParentRight="true"
+                    android:clickable="true"
+                    android:layout_marginRight="10dp" android:layout_gravity="center_vertical" />
+
+        </RelativeLayout>
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/btn_numpicker_press"/>
+        <RelativeLayout  android:gravity="center_vertical" android:paddingTop="10dp"
+                android:layout_width="match_parent" android:clickable="true" android:id="@+id/rl_my_address"
+                android:layout_height="50dp" >
+
+            <TextView
+                    android:text="我的地址" android:layout_gravity="center_vertical" android:layout_marginLeft="20dp"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content" android:textColor="#424242"
+                    android:layout_height="wrap_content"/>
+
+
+            <ImageView android:src="@mipmap/ic_arrow_right"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"  android:layout_alignParentRight="true"
+                    android:clickable="true"
+                    android:layout_marginRight="10dp" android:layout_gravity="center_vertical" />
+
+        </RelativeLayout>
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/btn_numpicker_press"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
