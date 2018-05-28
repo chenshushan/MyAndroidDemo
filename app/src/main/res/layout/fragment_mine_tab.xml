@@ -4,9 +4,9 @@
              android:layout_height="match_parent"
              tools:context="com.example.chen.myapplication.app.fragment.MineFragment">
     <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent"
-                                                       android:layout_height="wrap_content"></com.example.chen.myapplication.app.view.TitleView>
+                                                       android:layout_height="wrap_content" android:id="@+id/mine_title"></com.example.chen.myapplication.app.view.TitleView>
 
-    <RelativeLayout android:background="@color/colorPrimaryDark" android:id="@+id/rl_mine_top"
+    <RelativeLayout android:background="@color/colorPrimaryDark" android:id="@+id/rl_mine_top" android:layout_below="@+id/mine_title"
             android:layout_width="match_parent" android:paddingBottom="50dp"
             android:layout_height="wrap_content">
 

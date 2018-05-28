@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eeeeee">
+
+    <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent" android:id="@+id/rl_accountdetail_top"
+                                                       android:layout_height="wrap_content">
+
+    </com.example.chen.myapplication.app.view.TitleView>
+
+    <RelativeLayout
+            android:id="@+id/rl_accountdetail_userName"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/rl_accountdetail_top"
+            android:layout_marginTop="10dp"
+            android:background="#fff">
+
+        <TextView
+                android:id="@+id/iv_accountdetail_userName_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="用户名"
+                android:textSize="15dp"
+                android:textStyle="bold"/>
+
+        <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="小明"
+                android:textStyle="bold"/>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+            android:id="@+id/rl_accountdetail_bind_PhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/rl_accountdetail_userName"
+            android:layout_marginTop="2dp"
+            android:background="#fff">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="性别"
+                android:textSize="15dp"
+                android:textStyle="bold"/>
+
+        <TextView android:id="@+id/tv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="男士"
+                android:textStyle="bold"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/rl_accountdetail_password"
+            android:background="#fff"
+            android:layout_below="@+id/rl_accountdetail_bind_PhoneNumber"
+            android:layout_marginTop="2dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="手机号"
+                android:textSize="15dp"
+                android:textStyle="bold"/>
+
+        <TextView android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="18482117194"
+                android:textStyle="bold"/>
+    </RelativeLayout>
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#fff"
+            android:id="@+id/bt_loginactivity_exit"
+            android:layout_below="@+id/rl_accountdetail_password"
+            android:layout_marginTop="15dp"
+            android:text="退出登录"
+            android:onClick="logout"
+            android:textColor="#f00"
+            android:gravity="center"
+    />
+</RelativeLayout>

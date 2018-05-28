@@ -1,8 +1,8 @@
 package com.example.chen.myapplication.app;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -13,22 +13,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.adapter.OrderItemAdapter;
-import com.example.chen.myapplication.app.bean.Address;
-import com.example.chen.myapplication.app.bean.GoodsItem;
-import com.example.chen.myapplication.app.bean.Shop;
+import com.example.chen.myapplication.app.bean.*;
+import com.example.chen.myapplication.app.fragment.OrderFragment;
 import com.example.chen.myapplication.app.util.PreferenceUtil;
+import com.example.chen.myapplication.app.util.ToastUtil;
 import com.example.chen.myapplication.app.view.TitleView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.apache.commons.beanutils.BeanUtils;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.chen.myapplication.app.MyAddressActivity.ADDRESS_OK;
 import static com.example.chen.myapplication.app.adapter.AddressAdapter.SELECT_ADDRESS_OK;
+import static com.example.chen.myapplication.app.bean.Order.ORDER_LIST;
+import static com.example.chen.myapplication.app.bean.User.USER_INFO;
 
 // 订单结算页
 public class SettlementActivity extends AppCompatActivity implements View.OnClickListener {
@@ -42,7 +44,7 @@ public class SettlementActivity extends AppCompatActivity implements View.OnClic
 	TextView customerAddress; // 送货地址
 	TextView sendTime; // 送货时间
 	EditText remark; // 备注
-
+	TextView subOrder;// 提交订单
 
 	TextView sendMoney; // 配送费
 	TextView orderTotal; // 配送费
@@ -79,8 +81,9 @@ public class SettlementActivity extends AppCompatActivity implements View.OnClic
 		remark = (EditText)findViewById(R.id.et_order_remark);
 		sendMoney = (TextView)findViewById(R.id.tv_order_send);
 		orderTotal = (TextView)findViewById(R.id.order_total);
-
-		remark.setFocusable(false);
+		orderTotal = (TextView)findViewById(R.id.order_total);
+		subOrder = (TextView)findViewById(R.id.subOrder);
+		subOrder.setOnClickListener(this);
 
 		TitleView titleView = (TitleView) findViewById(R.id.title);
 		titleView.setTitleText("订单提交");
@@ -88,14 +91,16 @@ public class SettlementActivity extends AppCompatActivity implements View.OnClic
 		foods = (RecyclerView)findViewById(R.id.rv_goods);
 
 		sendMoney.setText(String.format("%.0f", shop.getPeisong()));
-		orderTotal.setText(getTotalMoney());
+		totalMoney = getTotalMoney();
+		orderTotal.setText(totalMoney);
 		double jian = shop.getJian();
 
 		foods.setLayoutManager(new LinearLayoutManager(this));
 		orderItemAdapter = new OrderItemAdapter(this, goodsList);
 		foods.setAdapter(orderItemAdapter);
 	}
-
+	String totalMoney;
+	private List<GoodsItem> goodsItemList = new ArrayList();
 	// 得到已选菜品的总价
 	public String getTotalMoney() {
 
@@ -103,6 +108,12 @@ public class SettlementActivity extends AppCompatActivity implements View.OnClic
 		Double sum = 0.0;
 		for (int i = 0; i < size; i++) {
 			Map properties = (Map) goodsList.valueAt(i);
+
+			Gson gson = new Gson();
+			String json = gson.toJson(properties);
+			GoodsItem goodsItem = gson.fromJson(json, GoodsItem.class);
+			goodsItemList.add(goodsItem);
+
 			double count = (double) properties.get("count");
 			double price = (double) properties.get("price");
 			double itemTotal = count * price;
@@ -111,6 +122,7 @@ public class SettlementActivity extends AppCompatActivity implements View.OnClic
 		return String.format("%.2f", sum);
 	}
 
+	public static  int orderId = 1;
 
 	@Override
 	public void onClick(View view) {
@@ -119,15 +131,45 @@ public class SettlementActivity extends AppCompatActivity implements View.OnClic
 			// 选择地址
 			Intent intent = new Intent(this, MyAddressActivity.class);
 			startActivityForResult(intent, SELECT_ADDRESS_OK);
+		}else if(id == R.id.subOrder) {
+			// 提交订单
+
+			Order order = new Order();
+			order.setId(orderId++);
+			order.setShop(shop);
+			User user = PreferenceUtil.getObject(USER_INFO, User.class);
+			order.setUser(user);
+			if(address == null) {
+				ToastUtil.showToast("请选择地址");
+			}
+			order.setAddress(address);
+			order.setStatus(1);
+			order.setTotalPrice(totalMoney);
+			order.setRemark(remark.getText().toString());
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			order.setCreatedTime(format.format(new Date()));
+			order.setSendAppointment(sendTime.getText().toString());
+			order.setFoods(goodsItemList);
+			Type type = new TypeToken<List<Order>>() {}.getType();
+			List<Order> orders =PreferenceUtil.getObject(ORDER_LIST, type);
+			if(orders == null) {
+				orders =  new ArrayList();
+			}
+			orders.add(order);
+			PreferenceUtil.set(ORDER_LIST, orders);
+
+			// 保存成功，转向订单列表页
+			Intent intent = new Intent(this, AppActivity.class);
+			startActivity(intent);
 		}
 	}
-
+	Address address;
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		switch (requestCode) {
 			case SELECT_ADDRESS_OK:
 				if(requestCode == SELECT_ADDRESS_OK) {
-					Address address = (Address) intent.getSerializableExtra("address");
+					address = (Address) intent.getSerializableExtra("address");
 					if(address != null){
 						customerName.setText(address.getName());
 						customerPhone.setText(address.getPhoneNumber());

@@ -45,11 +45,21 @@
         <item name="android:textSize">14dp</item>
         <item name="android:radius">9dp</item>
 
-        <!--android:radius="9dp"-->
-        <!--android:topLeftRadius="2dp"-->
-        <!--android:topRightRadius="2dp"-->
-        <!--android:bottomLeftRadius="2dp"-->
-        <!--android:bottomRightRadius="2dp"-->
-
+    </style>
+    <style name="Txt">
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="Txt.Main" parent="@style/Txt">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#424242</item>
+        <item name="android:textColorHint">#9e9e9e</item>
+    </style>
+    <style name="Txt.AuxiliaryInfo" parent="@style/Txt">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#ff656565</item>
     </style>
 </resources>
