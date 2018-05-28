@@ -8,10 +8,10 @@
         android:background="#EDEDED"
         tools:context="com.example.chen.myapplication.app.MyAddressActivity"  >
 
-    <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent" android:id="@+id/title"
+    <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent" android:id="@+id/address_title"
                                                        android:layout_height="wrap_content"></com.example.chen.myapplication.app.view.TitleView>
 
-    <android.support.v7.widget.RecyclerView android:layout_width="match_parent" android:id="@+id/address_list"
+    <android.support.v7.widget.RecyclerView android:layout_width="match_parent" android:id="@+id/address_list" android:layout_below="@+id/address_title"
                                             android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
@@ -25,8 +25,7 @@
         <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#DCDCDC"
-        />
+                android:background="#DCDCDC"/>
 
         <TextView
                 android:layout_width="wrap_content"
@@ -37,8 +36,7 @@
                 android:drawablePadding="4dp"
                 android:text="新增地址"
                 android:textSize="15sp"
-                android:textColor="#3599E8"
-        />
+                android:textColor="#3599E8"/>
 
     </LinearLayout>
 

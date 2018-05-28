@@ -18,6 +18,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.chen.myapplication.app.MyAddressActivity.ADDRESS_OK;
+
 public class AddAddressActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener,View.OnClickListener {
 
 	public static int count = 1;
@@ -100,6 +102,7 @@ public class AddAddressActivity extends AppCompatActivity implements CompoundBut
 		PreferenceUtil.set("addresses", addresses);
 
 		Intent intent = new Intent(this, MyAddressActivity.class);
-		startActivity(intent);
+		setResult(ADDRESS_OK, intent);
+		finish();
 	}
 }

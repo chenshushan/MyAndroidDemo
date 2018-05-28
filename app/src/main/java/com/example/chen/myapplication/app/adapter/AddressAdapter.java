@@ -1,31 +1,37 @@
 package com.example.chen.myapplication.app.adapter;
 
-import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.chen.myapplication.R;
-import com.example.chen.myapplication.app.ShopDetailActivity;
+import com.example.chen.myapplication.app.MyAddressActivity;
+import com.example.chen.myapplication.app.SettlementActivity;
 import com.example.chen.myapplication.app.bean.Address;
-import com.example.chen.myapplication.app.bean.GoodsItem;
 
 import java.util.List;
 
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHolder> {
 
 
-	private Context activity;
+	private MyAddressActivity activity;
 	private List<Address> addressList;
 	LayoutInflater inflater;
+	private RecyclerView addressRv;
 
-	public AddressAdapter(Context activity, List<Address> addressList) {
+	public AddressAdapter(MyAddressActivity activity, List<Address> addressList) {
 		this.activity = activity;
 		this.addressList = addressList;
 		inflater = LayoutInflater.from(activity);
+	}
+
+	@Override
+	public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+		super.onAttachedToRecyclerView(recyclerView);
+		addressRv = recyclerView;
 	}
 
 	@Override
@@ -48,7 +54,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 		return addressList.size();
 	}
 
-	class ViewHolder extends RecyclerView.ViewHolder {
+	class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 		TextView mNameTxt;
 		TextView mGenderTxt;
@@ -66,6 +72,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 			mAddressTxt = (TextView) itemView.findViewById(R.id.txt_address);
 			mDeleteBtn = (ImageButton) itemView.findViewById(R.id.btn_delete);
 			mEditBtn = (ImageButton) itemView.findViewById(R.id.btn_edit);
+
+			itemView.setOnClickListener(this);
 		}
 
 
@@ -76,6 +84,21 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 			mAddressTxt.setText(address.getAddress() + address.getAddressDetail());
 
 		}
-	}
 
+		@Override
+		public void onClick(View view) {
+			// 点击之后返回对应的地址信息
+			int position = addressRv.getChildAdapterPosition(view);
+			Address address = addressList.get(position);
+			Intent intent = new Intent(activity, SettlementActivity.class);
+			intent.putExtra("address", address);
+			activity.setResult(SELECT_ADDRESS_OK, intent);
+			activity.finish();
+		}
+	}
+	public static final int SELECT_ADDRESS_OK = 0;
+
+	public void setAddressList(List<Address> addressList) {
+		this.addressList = addressList;
+	}
 }

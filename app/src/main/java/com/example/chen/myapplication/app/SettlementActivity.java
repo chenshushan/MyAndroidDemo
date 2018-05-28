@@ -6,14 +6,17 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.adapter.OrderItemAdapter;
+import com.example.chen.myapplication.app.bean.Address;
 import com.example.chen.myapplication.app.bean.GoodsItem;
 import com.example.chen.myapplication.app.bean.Shop;
+import com.example.chen.myapplication.app.util.PreferenceUtil;
 import com.example.chen.myapplication.app.view.TitleView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,10 +24,14 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map;
 
+import static com.example.chen.myapplication.app.MyAddressActivity.ADDRESS_OK;
+import static com.example.chen.myapplication.app.adapter.AddressAdapter.SELECT_ADDRESS_OK;
+
 // 订单结算页
-public class SettlementActivity extends AppCompatActivity {
+public class SettlementActivity extends AppCompatActivity implements View.OnClickListener {
 
 	SparseArray  goodsList;
 
@@ -51,7 +58,6 @@ public class SettlementActivity extends AppCompatActivity {
 		Intent intent = getIntent();
 		String json = intent.getStringExtra("data");
 		String shopJson = intent.getStringExtra("shopJson");
-		System.out.println(json);
 		Gson gson = new Gson();
 		Type type = new TypeToken<SparseArray>() {}.getType();
 		goodsList = gson.fromJson(json, type);
@@ -63,6 +69,8 @@ public class SettlementActivity extends AppCompatActivity {
 
 
 		rlAddressSelectLayout = (RelativeLayout)findViewById(R.id.rl_address_select);
+		rlAddressSelectLayout.setOnClickListener(this);
+
 		llAddressMsgLayout = (LinearLayout)findViewById(R.id.ll_address_msg);
 		customerName = (TextView)findViewById(R.id.tv_customer_name);
 		customerPhone = (TextView)findViewById(R.id.tv_customer_phone);
@@ -71,6 +79,8 @@ public class SettlementActivity extends AppCompatActivity {
 		remark = (EditText)findViewById(R.id.et_order_remark);
 		sendMoney = (TextView)findViewById(R.id.tv_order_send);
 		orderTotal = (TextView)findViewById(R.id.order_total);
+
+		remark.setFocusable(false);
 
 		TitleView titleView = (TitleView) findViewById(R.id.title);
 		titleView.setTitleText("订单提交");
@@ -86,6 +96,7 @@ public class SettlementActivity extends AppCompatActivity {
 		foods.setAdapter(orderItemAdapter);
 	}
 
+	// 得到已选菜品的总价
 	public String getTotalMoney() {
 
 		int size = goodsList.size();
@@ -101,4 +112,32 @@ public class SettlementActivity extends AppCompatActivity {
 	}
 
 
+	@Override
+	public void onClick(View view) {
+		int id = view.getId();
+		if(id == R.id.rl_address_select) {
+			// 选择地址
+			Intent intent = new Intent(this, MyAddressActivity.class);
+			startActivityForResult(intent, SELECT_ADDRESS_OK);
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		switch (requestCode) {
+			case SELECT_ADDRESS_OK:
+				if(requestCode == SELECT_ADDRESS_OK) {
+					Address address = (Address) intent.getSerializableExtra("address");
+					if(address != null){
+						customerName.setText(address.getName());
+						customerPhone.setText(address.getPhoneNumber());
+						customerAddress.setText(address.getAddress()+address.getAddressDetail());
+						// 隐藏选择地址  显示地址信息
+						rlAddressSelectLayout.setVisibility(View.GONE);
+						llAddressMsgLayout.setVisibility(View.VISIBLE);
+					}
+				}
+				break;
+		}
+	}
 }

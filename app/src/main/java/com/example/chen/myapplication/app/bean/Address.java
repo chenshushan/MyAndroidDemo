@@ -1,8 +1,10 @@
 package com.example.chen.myapplication.app.bean;
 
 
+import java.io.Serializable;
+
 //用户地址详情的实体类
-public class Address {
+public class Address implements Serializable {
 	private int id;
 	private String name;//姓名
 	private String sex;//性别

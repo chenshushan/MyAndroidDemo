@@ -11,11 +11,11 @@
                                                        android:layout_height="wrap_content">
     </com.example.chen.myapplication.app.view.TitleView>
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_above="@+id/order_bottom"
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@+id/title"
                   android:orientation="vertical">
         <RelativeLayout android:background="@color/white"
                         android:layout_width="match_parent"
-                        android:layout_height="110dp" android:visibility="gone" android:id="@+id/rl_address_select"
+                        android:layout_height="110dp"  android:id="@+id/rl_address_select"
                         android:clickable="true">
             <TextView
                     android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
 
         </RelativeLayout>
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:id="@+id/ll_address_msg"
+                      android:id="@+id/ll_address_msg" android:visibility="gone"
                       android:orientation="vertical">
             <RelativeLayout
                     android:layout_width="match_parent"
@@ -127,7 +127,7 @@
               android:background="@color/btn_numpicker_press"/>
         <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="50dp">
 
             <EditText
                     android:id="@+id/et_order_remark"
@@ -162,7 +162,7 @@
 
         <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/rv_goods"/>
+                android:layout_height="150dp" android:id="@+id/rv_goods"/>
     </LinearLayout>
     <RelativeLayout android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"

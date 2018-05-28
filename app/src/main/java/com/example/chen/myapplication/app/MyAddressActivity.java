@@ -21,6 +21,8 @@ import java.util.List;
 
 public class MyAddressActivity extends AppCompatActivity {
 
+	public static final int ADDRESS_OK = 1;
+
 	TitleView titleView;
 
 	RecyclerView rvAddress;
@@ -32,7 +34,7 @@ public class MyAddressActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_address);
 
-		titleView = (TitleView)findViewById(R.id.title);
+		titleView = (TitleView)findViewById(R.id.address_title);
 		titleView.setTitleText("我的地址");
 		rvAddress = (RecyclerView)findViewById(R.id.address_list);
 		addAddress = (LinearLayout)findViewById(R.id.btn_create_address);
@@ -41,7 +43,7 @@ public class MyAddressActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				Intent intent = new Intent(context, AddAddressActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, ADDRESS_OK);
 			}
 		});
 
@@ -50,13 +52,25 @@ public class MyAddressActivity extends AppCompatActivity {
 
 		List<Address> addresses = PreferenceUtil.getObject("addresses", type);
 		if(addresses == null) {
-			addresses = new ArrayList<Address>();
+			addresses = new ArrayList();
 		}
-		rvAddress.setAdapter(new AddressAdapter(this, addresses));
+
+		addressAdapter = new AddressAdapter(this, addresses);
+		rvAddress.setAdapter(addressAdapter);
 	}
 
-
-
-
-
+	AddressAdapter addressAdapter;
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case ADDRESS_OK:
+			if(requestCode == ADDRESS_OK) {
+				Type type = new TypeToken<List<Address>>() {}.getType();
+				List<Address> addresses = PreferenceUtil.getObject("addresses", type);
+				addressAdapter.setAddressList(addresses);
+				addressAdapter.notifyDataSetChanged();
+			}
+			break;
+		}
+	}
 }
