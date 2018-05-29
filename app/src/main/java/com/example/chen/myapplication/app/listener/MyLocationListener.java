@@ -9,6 +9,7 @@ import java.util.List;
 import static com.example.chen.myapplication.MyApplication.mLocationClient;
 
 public class MyLocationListener extends BDAbstractLocationListener {
+
 	@Override
 	public void onReceiveLocation(BDLocation location){
 		//此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
@@ -45,5 +46,8 @@ public class MyLocationListener extends BDAbstractLocationListener {
 		for (Poi poi : poiList) {
 			System.out.println(poi.getName()+" " + poi.getRank());
 		}
+
 	}
+
+
 }

@@ -31,27 +31,24 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemClickLis
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_home_tab,container,false);
+		View view = inflater.inflate(R.layout.fragment_home_tab, container,false);
 		recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
 		getPersimmions();// 请求定位权限
 		mLocationClient.start();
 		// 注册监听函数
 		mLocationClient.registerLocationListener(new MyLocationListener());
-
-
 		return view;
 	}
+
 	HomeAdapter homeAdapterTemp;
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
 		// 设置adapter
 		final HomeAdapter homeAdapter = new HomeAdapter(getActivity(), getActivity().getSupportFragmentManager());
 		homeAdapterTemp = homeAdapter;
 		homeAdapter.setOnItemClickListener(this);
 		recyclerView.setAdapter(homeAdapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
 		// 设置上拉加载更多
 		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 			@Override

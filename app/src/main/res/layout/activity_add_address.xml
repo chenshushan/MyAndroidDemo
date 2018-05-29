@@ -7,7 +7,9 @@
         android:layout_height="match_parent"
         android:background="#EeEeEe">
     <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent"
-                                                       android:layout_height="wrap_content" android:id="@+id/rl_haveaddressactivity_top"></com.example.chen.myapplication.app.view.TitleView>
+                                                       android:layout_height="wrap_content"
+                                                       android:id="@+id/rl_haveaddressactivity_top">
+    </com.example.chen.myapplication.app.view.TitleView>
 
 
     <RelativeLayout
@@ -95,8 +97,12 @@
                 android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
                 android:background="@null"
-                android:hint="你的手机号"
-        />
+                android:hint="你的手机号"/>
+        <TextView android:layout_width="40dp" android:gravity="center_vertical" android:layout_alignParentRight="true"
+                  android:layout_centerInParent="true"
+                  android:layout_height="40dp" android:background="@mipmap/addpeople_fill"
+                  android:layout_marginRight="10dp"/>
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -105,8 +111,7 @@
             android:background="#fff"
             android:layout_marginTop="2dp"
             android:layout_below="@+id/rl_haveaddressactivity_bottom_3"
-            android:id="@+id/rl_haveaddressactivity_bottom_4"
-    >
+            android:id="@+id/rl_haveaddressactivity_bottom_4">
 
         <TextView
                 android:id="@+id/tv_haveaddressactivity_location"
@@ -118,8 +123,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:clickable="true"
-                android:onClick="onClick"
-        />
+                android:onClick="onClick"/>
         <EditText
                 android:id="@+id/tv_haveaddressactivity_location_right"
                 android:layout_width="200dp"
@@ -130,8 +134,11 @@
                 android:layout_marginLeft="10dp"
                 android:clickable="true"
                 android:onClick="onClick"
-                android:background="@null"
-        />
+                android:background="@null"/>
+        <TextView android:layout_width="40dp" android:gravity="center_vertical" android:layout_alignParentRight="true"
+                  android:layout_centerInParent="true"
+                  android:layout_height="40dp" android:background="@mipmap/icon_openmap_mark"
+                  android:layout_marginRight="10dp"/>
     </RelativeLayout>
 
     <RelativeLayout
