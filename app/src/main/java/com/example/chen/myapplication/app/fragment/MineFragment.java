@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.chen.myapplication.R;
+import com.example.chen.myapplication.app.BaiduMapActivity;
 import com.example.chen.myapplication.app.LoginActivity;
 import com.example.chen.myapplication.app.MyAddressActivity;
 import com.example.chen.myapplication.app.UserCenterActivity;
@@ -29,6 +30,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
 	TextView loginOrUserName;
 	TextView priorityOrPhone;
+	RelativeLayout location;
 
 	TitleView titleView;
 	// 绑定UI
@@ -42,6 +44,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
 		myAddress = (RelativeLayout)view.findViewById(R.id.rl_my_address);
 		myCenter = (RelativeLayout)view.findViewById(R.id.rl_my_center);
+		location = (RelativeLayout)view.findViewById(R.id.rl_my_location);
+		location.setOnClickListener(this);
 		myAddress.setOnClickListener(this);
 		myCenter.setOnClickListener(this);
 		loginOrUserName = (TextView)view.findViewById(R.id.tv_minefragment_register_or_login);
@@ -81,6 +85,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 				break;
 			case R.id.iv_minefragment_back :
 				intent =new Intent(getActivity(), LoginActivity.class);
+			case R.id.rl_my_location :
+				intent =new Intent(getActivity(), BaiduMapActivity.class);
 		}
 		startActivity(intent);
 	}

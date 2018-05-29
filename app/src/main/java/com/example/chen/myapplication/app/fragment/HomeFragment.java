@@ -17,6 +17,7 @@ import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.ShopDetailActivity;
 import com.example.chen.myapplication.app.adapter.HomeAdapter;
 import com.example.chen.myapplication.app.bean.Shop;
+import com.example.chen.myapplication.app.listener.MyLocationListener;
 import com.example.chen.myapplication.app.service.ShopService;
 
 import java.util.ArrayList;
@@ -32,8 +33,12 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemClickLis
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home_tab,container,false);
 		recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
-		getPersimmions();
+		getPersimmions();// 请求定位权限
 		mLocationClient.start();
+		// 注册监听函数
+		mLocationClient.registerLocationListener(new MyLocationListener());
+
+
 		return view;
 	}
 	HomeAdapter homeAdapterTemp;

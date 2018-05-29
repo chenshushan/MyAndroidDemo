@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 public class MyApplication extends Application {
 	private static Context context;
 	public static LocationClient mLocationClient = null;
-	private MyLocationListener myListener = new MyLocationListener();
 
 	@Override
 	public void onCreate() {
@@ -30,8 +29,7 @@ public class MyApplication extends Application {
 		PreferenceUtil.init(this, new Gson());
 		// 初始化百度定位LocationClient类
 		mLocationClient = new LocationClient(getApplicationContext());
-		// 注册监听函数
-		mLocationClient.registerLocationListener(myListener);
+
 
 		// 需将配置好的LocationClientOption对象，通过setLocOption方法传递给LocationClient对象使用
 		// 更多LocationClientOption的配置，请参照类参考中LocationClientOption类的详细说明

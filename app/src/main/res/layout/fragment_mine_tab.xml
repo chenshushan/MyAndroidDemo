@@ -96,6 +96,29 @@
         <View android:layout_width="match_parent"
               android:layout_height="1dp"
               android:background="@color/btn_numpicker_press"/>
+
+        <RelativeLayout  android:gravity="center_vertical" android:paddingTop="10dp"
+                         android:layout_width="match_parent" android:clickable="true" android:id="@+id/rl_my_location"
+                         android:layout_height="50dp" >
+
+            <TextView
+                    android:text="我的定位" android:layout_gravity="center_vertical" android:layout_marginLeft="20dp"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content" android:textColor="#424242"
+                    android:layout_height="wrap_content"/>
+
+
+            <ImageView android:src="@mipmap/ic_arrow_right"
+                       android:layout_width="20dp"
+                       android:layout_height="20dp"  android:layout_alignParentRight="true"
+                       android:clickable="true"
+                       android:layout_marginRight="10dp" android:layout_gravity="center_vertical" />
+
+        </RelativeLayout>
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/btn_numpicker_press"/>
+
     </LinearLayout>
 
 
