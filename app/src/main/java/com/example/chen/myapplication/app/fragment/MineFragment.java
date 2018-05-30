@@ -85,8 +85,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 				break;
 			case R.id.iv_minefragment_back :
 				intent =new Intent(getActivity(), LoginActivity.class);
+				break;
 			case R.id.rl_my_location :
 				intent =new Intent(getActivity(), BaiduMapActivity.class);
+				break;
 		}
 		startActivity(intent);
 	}

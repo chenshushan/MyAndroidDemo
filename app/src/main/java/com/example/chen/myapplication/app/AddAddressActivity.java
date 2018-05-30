@@ -156,7 +156,7 @@ public class AddAddressActivity extends AppCompatActivity implements CompoundBut
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 		switch (requestCode) {
-			case 1 : {
+			case 1 : {// 获取联系人结果
 				if (resultCode == RESULT_OK) {
 					Uri contactData = intent.getData();
 					Cursor cursor = managedQuery(contactData, null, null, null, null);
@@ -167,7 +167,7 @@ public class AddAddressActivity extends AppCompatActivity implements CompoundBut
 				break;
 
 			}
-			case 2: {
+			case 2: {// 地图选址结果
 				String addressStr = intent.getStringExtra("address");
 				address.setText(addressStr);
 				break;
@@ -195,8 +195,6 @@ public class AddAddressActivity extends AppCompatActivity implements CompoundBut
 					null,
 					ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId,
 					null, null);
-			//int phoneCount = phones.getCount();
-			//allPhoneNum = new ArrayList<String>(phoneCount);
 			if (phones.moveToFirst()) {
 				// 遍历所有的电话号码
 				for (; !phones.isAfterLast(); phones.moveToNext()) {

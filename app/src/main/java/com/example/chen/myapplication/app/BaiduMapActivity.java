@@ -30,7 +30,6 @@ public class BaiduMapActivity extends AppCompatActivity {
 
 	MapView mMapView;
 	List<PoiInfo> dataList;
-	Button mCompleteButton;
 
 	RecyclerView nearRv;
 	private BaiduMap mBaiduMap;
@@ -44,7 +43,6 @@ public class BaiduMapActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_baidu_map);
 
 		dataList = new ArrayList();
-		mCompleteButton = (Button) findViewById(R.id.chat_publish_complete_publish);
 		nearRv = (RecyclerView) findViewById(R.id.lv_location_nearby);
 
 		nearRv.setLayoutManager(new LinearLayoutManager(this));
