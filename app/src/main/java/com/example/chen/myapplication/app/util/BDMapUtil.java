@@ -38,8 +38,7 @@ public class BDMapUtil {
 
 // 设置定位图层的配置（定位模式，是否允许方向信息，用户自定义定位图标）
 
-		BitmapDescriptor  mCurrentMarker = BitmapDescriptorFactory
-				.fromResource(R.mipmap.icon_openmap_mark2);
+		BitmapDescriptor  mCurrentMarker = BitmapDescriptorFactory.fromResource(R.mipmap.icon_openmap_mark2);
 		MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, mCurrentMarker);
 		mBaiduMap.setMyLocationConfiguration(config);
 		return mCurrentMarker;
@@ -54,7 +53,7 @@ public class BDMapUtil {
 		double longitude = location.getLongitude();
 		final LatLng point  = new LatLng(latitude, longitude);
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory. newLatLng(point));
-		mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(17));
+		mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(18));
 
 		setCursor(mBaiduMap, point, mCurrentMarker);
 

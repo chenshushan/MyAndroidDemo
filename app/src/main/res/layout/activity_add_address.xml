@@ -32,7 +32,7 @@
 
         <EditText
                 android:id="@+id/et_contactName"
-                android:layout_width="200dp"
+                android:layout_width="230dp"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/tv_haveaddressactivity_contact"
                 android:layout_marginLeft="10dp"
@@ -87,11 +87,10 @@
                 android:textSize="18sp"
                 android:textColor="#424242"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-        />
+                android:layout_marginLeft="10dp"/>
         <EditText
                 android:id="@+id/et_Phone"
-                android:layout_width="200dp"
+                android:layout_width="230dp"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/tv_haveaddressactivity_phoneNumber"
                 android:layout_marginLeft="10dp"
@@ -99,7 +98,7 @@
                 android:background="@null"
                 android:hint="你的手机号"/>
         <TextView android:layout_width="40dp" android:gravity="center_vertical" android:layout_alignParentRight="true"
-                  android:layout_centerInParent="true"
+                  android:layout_centerInParent="true" android:clickable="true" android:id="@+id/select_linker"
                   android:layout_height="40dp" android:background="@mipmap/addpeople_fill"
                   android:layout_marginRight="10dp"/>
 
@@ -126,7 +125,7 @@
                 android:onClick="onClick"/>
         <EditText
                 android:id="@+id/tv_haveaddressactivity_location_right"
-                android:layout_width="200dp"
+                android:layout_width="230dp"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/tv_haveaddressactivity_location"
                 android:hint="小区/写字楼/学校"
@@ -137,8 +136,8 @@
                 android:background="@null"/>
         <TextView android:layout_width="40dp" android:gravity="center_vertical" android:layout_alignParentRight="true"
                   android:layout_centerInParent="true"
-                  android:layout_height="40dp" android:background="@mipmap/icon_openmap_mark"
-                  android:layout_marginRight="10dp"/>
+                  android:layout_height="40dp" android:background="@mipmap/location"
+                  android:layout_marginRight="10dp" android:id="@+id/select_address"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -157,18 +156,16 @@
                 android:textSize="18sp"
                 android:textColor="#424242"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-        />
+                android:layout_marginLeft="10dp"/>
 
         <EditText
                 android:id="@+id/et_haveaddressactivity_detail_location"
-                android:layout_width="200dp"
+                android:layout_width="230dp"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/tv_haveaddressactivity_detail_location"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:hint="如海淀区学淸路紫苑小区201室"
-        />
+                android:hint="如海淀区学淸路紫苑小区201室"/>
 
     </RelativeLayout>
 

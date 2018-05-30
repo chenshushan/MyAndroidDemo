@@ -1,7 +1,6 @@
 package com.example.chen.myapplication.app;
 
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,11 +8,13 @@ import android.widget.Button;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.*;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
-import com.baidu.mapapi.search.geocode.*;
 import com.baidu.mapapi.search.poi.*;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.adapter.LocationAdapter;
@@ -141,8 +142,12 @@ public class BaiduMapActivity extends AppCompatActivity {
 	@Override
 	protected void onDestroy() {
 		mBaiduMap.setMyLocationEnabled(false);
-		mLocationClient.stop(); //停止定位
-		poiSearch.destroy();
+		if(mLocationClient.isStarted()) {
+			mLocationClient.stop(); //停止定位
+		}
+		if(poiSearch != null) {
+			poiSearch.destroy();
+		}
 		super.onDestroy();
 	}
 
