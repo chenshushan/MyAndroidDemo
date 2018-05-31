@@ -41,6 +41,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
 		titleView = (TitleView) view.findViewById(R.id.mine_title);
 		titleView.setTitleText("个人中心");
+		titleView.hideBackImage();
 
 		myAddress = (RelativeLayout)view.findViewById(R.id.rl_my_address);
 		myCenter = (RelativeLayout)view.findViewById(R.id.rl_my_center);

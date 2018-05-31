@@ -6,7 +6,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.example.chen.myapplication.app.OrderActivity">
+    <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent"
+                                                       android:layout_height="50dp"
+                                                       android:id="@+id/order_title">
 
+    </com.example.chen.myapplication.app.view.TitleView>
     <TextView
             android:id="@+id/tv_order_text"
             android:layout_width="wrap_content"
@@ -14,9 +18,10 @@
             android:layout_centerInParent="true"
             android:text="还没有订单，快去下单吧"
             android:textColor="#000"
-            android:textSize="18sp" />
+            android:textSize="18sp" android:visibility="gone"/>
     <android.support.v7.widget.RecyclerView android:layout_width="match_parent" android:id="@+id/rv_orders"
-                                            android:layout_height="match_parent">
+                                            android:layout_marginTop="50dp"
+                                            android:layout_height="wrap_content" android:layout_marginBottom="50dp">
 
     </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

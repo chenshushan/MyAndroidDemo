@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.ShopDetailActivity;
@@ -14,6 +15,7 @@ import com.example.chen.myapplication.app.bean.Order;
 import com.example.chen.myapplication.app.bean.Shop;
 import com.example.chen.myapplication.app.util.DialogUtil;
 import com.example.chen.myapplication.app.util.ToastUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
 import java.util.List;
@@ -55,7 +57,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 	class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 		private TextView tvShopName,tvCost,tvCreate,tvStatus,tvSend,operate;
-
+		private ImageView img;
 		public ViewHolder(View itemView) {
 			super(itemView);
 
@@ -65,6 +67,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 			tvStatus = (TextView) itemView.findViewById(R.id.txt_order_status);
 			tvSend = (TextView) itemView.findViewById(R.id.send_appointment);
 			operate = (TextView) itemView.findViewById(R.id.btn_payment);
+			img = (ImageView) itemView.findViewById(R.id.shop_image);
 			operate.setOnClickListener(this);
 		}
 
@@ -76,10 +79,12 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 				tvShopName.setText(shop.getName());
 			}
 			String totalPrice = order.getTotalPrice();
-			tvCost.setText(totalPrice);
+			tvCost.setText("￥" + totalPrice);
 			tvCreate.setText(order.getCreatedTime());
 			tvStatus.setText(order.getStatusCN());
 			tvSend.setText(order.getSendAppointment());
+			Picasso.with(activity).load(shop.getPicUrl()).error(R.mipmap.log).placeholder(R.mipmap.log).into(this.img);
+
 		}
 
 		@Override

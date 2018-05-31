@@ -90,14 +90,15 @@ public class SettlementActivity extends BaseActivity implements View.OnClickList
 
 		foods = (RecyclerView)findViewById(R.id.rv_goods);
 
-		sendMoney.setText(String.format("%.0f", shop.getPeisong()));
+		double peisong = shop.getPeisong();
+		sendMoney.setText(String.format("%.0f", peisong));
 		totalMoney = getTotalMoney();
 		orderTotal.setText(totalMoney);
 		double jian = shop.getJian();
 		double full = shop.getFull();
 
 		if(Double.valueOf(totalMoney) >= full){
-			String format = String.format("%.2f", Double.valueOf(totalMoney) - jian);
+			String format = String.format("%.2f", Double.valueOf(totalMoney) - jian + peisong);
 			sub.setText("已优惠：￥" + jian);
 			orderTotal.setText("￥" + format);
 
