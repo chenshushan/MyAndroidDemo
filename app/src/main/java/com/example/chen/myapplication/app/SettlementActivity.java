@@ -2,7 +2,6 @@ package com.example.chen.myapplication.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.adapter.OrderItemAdapter;
 import com.example.chen.myapplication.app.bean.*;
-import com.example.chen.myapplication.app.fragment.OrderFragment;
 import com.example.chen.myapplication.app.util.PreferenceUtil;
 import com.example.chen.myapplication.app.util.ToastUtil;
 import com.example.chen.myapplication.app.view.TitleView;
@@ -33,7 +31,7 @@ import static com.example.chen.myapplication.app.bean.Order.ORDER_LIST;
 import static com.example.chen.myapplication.app.bean.User.USER_INFO;
 
 // 订单结算页
-public class SettlementActivity extends AppCompatActivity implements View.OnClickListener {
+public class SettlementActivity extends BaseActivity implements View.OnClickListener {
 
 	SparseArray  goodsList;
 
@@ -48,12 +46,13 @@ public class SettlementActivity extends AppCompatActivity implements View.OnClic
 
 	TextView sendMoney; // 配送费
 	TextView orderTotal; // 配送费
+	TextView sub; // 配送费
 	RecyclerView foods; // 菜品列表
 	OrderItemAdapter orderItemAdapter; // 菜品列表的adapter
 	Shop shop;// 店铺信息
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_app_settlement);
 
@@ -81,7 +80,8 @@ public class SettlementActivity extends AppCompatActivity implements View.OnClic
 		remark = (EditText)findViewById(R.id.et_order_remark);
 		sendMoney = (TextView)findViewById(R.id.tv_order_send);
 		orderTotal = (TextView)findViewById(R.id.order_total);
-		orderTotal = (TextView)findViewById(R.id.order_total);
+		sub = (TextView)findViewById(R.id.order_sub_price);
+
 		subOrder = (TextView)findViewById(R.id.subOrder);
 		subOrder.setOnClickListener(this);
 
@@ -94,6 +94,18 @@ public class SettlementActivity extends AppCompatActivity implements View.OnClic
 		totalMoney = getTotalMoney();
 		orderTotal.setText(totalMoney);
 		double jian = shop.getJian();
+		double full = shop.getFull();
+
+		if(Double.valueOf(totalMoney) >= full){
+			String format = String.format("%.2f", Double.valueOf(totalMoney) - jian);
+			sub.setText("已优惠：￥" + jian);
+			orderTotal.setText("￥" + format);
+
+			totalMoney = format;
+		}else {
+			sub.setVisibility(View.GONE);
+		}
+
 
 		foods.setLayoutManager(new LinearLayoutManager(this));
 		orderItemAdapter = new OrderItemAdapter(this, goodsList);
@@ -141,6 +153,7 @@ public class SettlementActivity extends AppCompatActivity implements View.OnClic
 			order.setUser(user);
 			if(address == null) {
 				ToastUtil.showToast("请选择地址");
+				return;
 			}
 			order.setAddress(address);
 			order.setStatus(1);

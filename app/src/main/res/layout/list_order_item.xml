@@ -47,8 +47,7 @@
                 <TextView
                         android:id="@+id/txt_order_status" android:layout_centerVertical="true" android:layout_marginRight="10dp"
                         style="@style/Txt.Main" android:layout_alignParentRight="true" android:textSize="13sp" android:textColor="@color/color_red"
-                        tools:text="已完成"
-                />
+                        tools:text="待支付"/>
 
             </RelativeLayout>
 
@@ -67,8 +66,7 @@
             android:paddingLeft="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:gravity="center_vertical|right"
-    >
+            android:gravity="center_vertical|right">
 
         <TextView
                 android:id="@+id/btn_confirm_received"
@@ -79,8 +77,7 @@
                 android:textSize="15sp"
                 android:textColor="@drawable/txt_blue_btn"
                 android:background="@drawable/selector_activity_button"
-                android:visibility="gone"
-        />
+                android:visibility="gone"/>
 
         <TextView
                 android:id="@+id/btn_payment"
@@ -91,22 +88,8 @@
                 android:textSize="15sp"
                 android:clickable="true"
                 android:textColor="@drawable/txt_blue_btn"
-                android:background="@drawable/selector_blue_border_button"/>
-
-        <TextView
-                android:id="@+id/btn_order_again"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:text="再来一单"
-                android:textSize="15sp"
-                android:textColor="@drawable/txt_blue_btn"
-                android:background="@drawable/selector_activity_button"
-                android:visibility="gone"
+                android:background="@drawable/selector_blue_border_button"
         />
-
     </LinearLayout>
 
     <View android:layout_width="match_parent"

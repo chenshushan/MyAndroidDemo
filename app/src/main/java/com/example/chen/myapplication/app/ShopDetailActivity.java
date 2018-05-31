@@ -2,7 +2,6 @@ package com.example.chen.myapplication.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -27,7 +26,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import java.util.List;
 // 店铺详情页
-public class ShopDetailActivity extends AppCompatActivity implements View.OnClickListener{
+public class ShopDetailActivity extends BaseActivity implements View.OnClickListener{
 	private ImageView imgCart; // 购物车图片
 	private ViewGroup containerLayout; // 顶层布局
 	private RecyclerView rvType; // 左侧类别列表
@@ -60,7 +59,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 	GoodsSelectedAdapter selectedAdapter; // 底部购物车已选菜品adapter
 	Shop shop; // 店铺信息
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shop_detail);
 		Intent intent = getIntent();

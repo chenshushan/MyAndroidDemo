@@ -3,12 +3,19 @@ package com.example.chen.myapplication.app.listener;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.Poi;
+import com.example.chen.myapplication.app.fragment.HomeFragment;
 
 import java.util.List;
 
 import static com.example.chen.myapplication.MyApplication.mLocationClient;
 
 public class MyLocationListener extends BDAbstractLocationListener {
+
+	HomeFragment homeFragment;
+
+	public MyLocationListener(HomeFragment homeFragment) {
+		this.homeFragment = homeFragment;
+	}
 
 	@Override
 	public void onReceiveLocation(BDLocation location){
@@ -36,6 +43,8 @@ public class MyLocationListener extends BDAbstractLocationListener {
 		String city = location.getCity();    //获取城市
 		String district = location.getDistrict();    //获取区县
 		String street = location.getStreet();    //获取街道信息
+
+		homeFragment.getMyLocation().setText(street);
 
 		String format = String.format("%s %s %s %s %s %s", country, province, city, district, street, addr);
 		System.out.println(format);

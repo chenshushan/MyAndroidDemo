@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.ShopDetailActivity;
 import com.example.chen.myapplication.app.adapter.HomeAdapter;
@@ -29,14 +30,22 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemClickLis
 
 	RecyclerView recyclerView;
 
+	TextView myLocation;
+
+	public TextView getMyLocation() {
+		return myLocation;
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home_tab, container,false);
 		recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
+
+		myLocation = (TextView)view.findViewById(R.id.home_location);
 		getPersimmions();// 请求定位权限
 		mLocationClient.start();
 		// 注册监听函数
-		mLocationClient.registerLocationListener(new MyLocationListener());
+		mLocationClient.registerLocationListener(new MyLocationListener(this));
 		return view;
 	}
 
@@ -127,14 +136,6 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemClickLis
 		}else{
 			return true;
 		}
-	}
-
-	@TargetApi(23)
-	@Override
-	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-		// TODO Auto-generated method stub
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
 	}
 
 }

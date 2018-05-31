@@ -1,10 +1,10 @@
 package com.example.chen.myapplication.app;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Button;
+import android.view.View;
+import android.widget.TextView;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.SDKInitializer;
@@ -26,21 +26,32 @@ import java.util.List;
 
 import static com.example.chen.myapplication.MyApplication.mLocationClient;
 
-public class BaiduMapActivity extends AppCompatActivity {
+public class BaiduMapActivity extends BaseActivity {
 
 	MapView mMapView;
 	List<PoiInfo> dataList;
 
 	RecyclerView nearRv;
 	private BaiduMap mBaiduMap;
+
+	TextView back;
+
 	LocationAdapter locationAdapter;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		SDKInitializer.initialize(getApplicationContext());
 
 		setContentView(R.layout.activity_baidu_map);
+
+		back = (TextView)findViewById(R.id.chat_publish_complete_cancle);
+		back.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				finish();
+			}
+		});
 
 		dataList = new ArrayList();
 		nearRv = (RecyclerView) findViewById(R.id.lv_location_nearby);

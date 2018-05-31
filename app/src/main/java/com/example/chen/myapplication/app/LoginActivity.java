@@ -1,7 +1,6 @@
 package com.example.chen.myapplication.app;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,15 +9,16 @@ import com.example.chen.myapplication.app.bean.User;
 import com.example.chen.myapplication.app.util.PreferenceUtil;
 import com.example.chen.myapplication.app.util.ToastUtil;
 
+import static com.example.chen.myapplication.app.AppActivity.HOME_PAGE;
 import static com.example.chen.myapplication.app.bean.User.USER_INFO;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity  {
 
 	EditText usernameEt;
 	EditText passwordEt;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		usernameEt = (EditText) findViewById(R.id.et_login_username);
@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 			PreferenceUtil.set(USER_INFO, user);
 
 			Intent intent = new Intent(this, AppActivity.class);
-			intent.putExtra("index",2);
+			intent.putExtra(HOME_PAGE,2);
 			startActivity(intent);
 			finish();//销毁当前页面
 		}else {

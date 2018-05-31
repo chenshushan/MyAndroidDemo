@@ -70,7 +70,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
 			this.item = item;
 			foodName.setText(item.name);
 			foodCost.setText(String.format("%.2f",item.count*item.price));
-			foodCount.setText(String.valueOf(item.count));
+			foodCount.setText("x" + String.valueOf(item.count));
 		}
 	}
 

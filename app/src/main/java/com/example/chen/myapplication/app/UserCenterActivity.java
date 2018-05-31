@@ -1,6 +1,6 @@
 package com.example.chen.myapplication.app;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -10,10 +10,11 @@ import com.example.chen.myapplication.app.util.PreferenceUtil;
 import com.example.chen.myapplication.app.util.ToastUtil;
 import com.example.chen.myapplication.app.view.TitleView;
 
+import static com.example.chen.myapplication.app.AppActivity.HOME_PAGE;
 import static com.example.chen.myapplication.app.bean.User.USER_INFO;
 
 // 个人中心
-public class UserCenterActivity extends AppCompatActivity {
+public class UserCenterActivity extends BaseActivity {
 
 
 	TextView username;
@@ -23,8 +24,10 @@ public class UserCenterActivity extends AppCompatActivity {
 	TitleView titleView;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		checkLogin();
+
 		setContentView(R.layout.activity_user_center);
 		username = (TextView) findViewById(R.id.tv_username);
 		phone = (TextView) findViewById(R.id.tv_phone);
@@ -33,11 +36,6 @@ public class UserCenterActivity extends AppCompatActivity {
 		titleView.setTitleText("个人中心");
 
 		User user = PreferenceUtil.getObject(USER_INFO, User.class);
-		if(user == null) {
-			finish();
-			ToastUtil.showToast("请登录");
-			return;
-		}
 		username.setText(user.getUsername());
 		phone.setText(user.getPhone());
 		sex.setText(user.getSex());
@@ -46,6 +44,8 @@ public class UserCenterActivity extends AppCompatActivity {
 	public void logout(View view){
 		PreferenceUtil.set(USER_INFO, "");
 		ToastUtil.showToast("退出成功");
-		finish();
+		Intent intent = new Intent(this, AppActivity.class);
+		intent.putExtra(HOME_PAGE, 2);
+		startActivity(intent);
 	}
 }

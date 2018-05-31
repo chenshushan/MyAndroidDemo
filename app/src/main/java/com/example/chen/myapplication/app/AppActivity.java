@@ -1,9 +1,9 @@
 package com.example.chen.myapplication.app;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import com.example.chen.myapplication.R;
@@ -15,7 +15,7 @@ import com.example.chen.myapplication.app.fragment.OrderFragment;
 import java.util.ArrayList;
 import java.util.List;
 // 主页
-public class AppActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener{
+public class AppActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener{
 
 	ViewPager viewPager;
 	RadioButton homeBtn;
@@ -23,6 +23,8 @@ public class AppActivity extends AppCompatActivity implements RadioGroup.OnCheck
 	RadioButton mineBtn;
 
 	RadioGroup radioGroup;
+
+	public static final String HOME_PAGE = "set_home_page";
 
 	private List<Fragment> fragmentList;//  Fragment数组
 
@@ -36,7 +38,7 @@ public class AppActivity extends AppCompatActivity implements RadioGroup.OnCheck
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_app);
 		initView();
@@ -82,6 +84,13 @@ public class AppActivity extends AppCompatActivity implements RadioGroup.OnCheck
 			}
 		});
 
+		homeBtn.setTextColor(getResources().getColor(R.color.color_table_text_press));
+		// 判断是否是从登录页面返回的 需要设置特定的页面
+		Intent intent = getIntent();
+		int index = intent.getIntExtra(HOME_PAGE, -1);
+		if(index ==2) {
+			radioGroup.check(R.id.rb_mine);
+		}
 	}
 
 
@@ -95,12 +104,22 @@ public class AppActivity extends AppCompatActivity implements RadioGroup.OnCheck
 		switch (checkedId) {
 			case R.id.rb_firstpage:
 				current = 0;
+				homeBtn.setTextColor(getResources().getColor(R.color.color_table_text_press));
+				orderbtn.setTextColor(getResources().getColor(R.color.color_table_text));
+				mineBtn.setTextColor(getResources().getColor(R.color.color_table_text));
+
 				break;
 			case R.id.rb_order:
 				current = 1;
+				homeBtn.setTextColor(getResources().getColor(R.color.color_table_text));
+				orderbtn.setTextColor(getResources().getColor(R.color.color_table_text_press));
+				mineBtn.setTextColor(getResources().getColor(R.color.color_table_text));
 				break;
 			case R.id.rb_mine:
 				current = 2;
+				homeBtn.setTextColor(getResources().getColor(R.color.color_table_text));
+				orderbtn.setTextColor(getResources().getColor(R.color.color_table_text));
+				mineBtn.setTextColor(getResources().getColor(R.color.color_table_text_press));
 				break;
 		}
 		if(viewPager.getCurrentItem() != current){

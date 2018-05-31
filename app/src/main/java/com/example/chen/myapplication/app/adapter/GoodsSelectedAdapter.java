@@ -76,7 +76,7 @@ public class GoodsSelectedAdapter extends RecyclerView.Adapter<GoodsSelectedAdap
 			}
 		}
 
-		public void bindData(GoodsItem item){
+		public void bindData(GoodsItem item) {
 			this.item = item;
 			tvName.setText(item.name);
 			tvCost.setText(String.format("%.2f",item.count*item.price));

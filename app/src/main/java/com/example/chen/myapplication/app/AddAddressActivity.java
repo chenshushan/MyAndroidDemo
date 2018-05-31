@@ -4,10 +4,9 @@ package com.example.chen.myapplication.app;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import com.example.chen.myapplication.R;
@@ -23,7 +22,7 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 import static com.example.chen.myapplication.app.MyAddressActivity.ADDRESS_OK;
 
-public class AddAddressActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class AddAddressActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
 	public static int count = 1;
 
@@ -40,7 +39,7 @@ public class AddAddressActivity extends AppCompatActivity implements CompoundBut
 	public static final int SELECT_LINKER = 1;
 	public static final int SELECT_ADDRESS = 2;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_address);
 		initView();

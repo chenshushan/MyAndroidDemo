@@ -12,7 +12,10 @@ import com.example.chen.myapplication.app.ShopDetailActivity;
 import com.example.chen.myapplication.app.bean.GoodsItem;
 import com.example.chen.myapplication.app.bean.Order;
 import com.example.chen.myapplication.app.bean.Shop;
+import com.example.chen.myapplication.app.util.DialogUtil;
+import com.example.chen.myapplication.app.util.ToastUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
@@ -24,6 +27,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
 	public OrdersAdapter(Context activity, List<Order> oders) {
 		this.activity = activity;
+		Collections.reverse(oders);
 		this.oders = oders;
 		inflater = LayoutInflater.from(activity);
 	}
@@ -48,9 +52,9 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 		return oders.size();
 	}
 
-	class ViewHolder extends RecyclerView.ViewHolder {
+	class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-		private TextView tvShopName,tvCost,tvCreate,tvStatus,tvSend;
+		private TextView tvShopName,tvCost,tvCreate,tvStatus,tvSend,operate;
 
 		public ViewHolder(View itemView) {
 			super(itemView);
@@ -60,6 +64,8 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 			tvCreate = (TextView) itemView.findViewById(R.id.txt_created_at);
 			tvStatus = (TextView) itemView.findViewById(R.id.txt_order_status);
 			tvSend = (TextView) itemView.findViewById(R.id.send_appointment);
+			operate = (TextView) itemView.findViewById(R.id.btn_payment);
+			operate.setOnClickListener(this);
 		}
 
 
@@ -69,10 +75,21 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 			if(shop != null){
 				tvShopName.setText(shop.getName());
 			}
-			tvCost.setText(order.getTotalPrice());
+			String totalPrice = order.getTotalPrice();
+			tvCost.setText(totalPrice);
 			tvCreate.setText(order.getCreatedTime());
 			tvStatus.setText(order.getStatusCN());
 			tvSend.setText(order.getSendAppointment());
+		}
+
+		@Override
+		public void onClick(View view) {
+			DialogUtil.showQuestionDialog(activity, "提示", "确认支付吗？", new DialogUtil.OnClickYesListener() {
+				@Override
+				public void onClickYes() {
+					ToastUtil.showToast("支付成功");
+				}
+			});
 		}
 	}
 

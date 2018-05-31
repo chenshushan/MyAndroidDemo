@@ -163,7 +163,7 @@
 
         <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="150dp" android:id="@+id/rv_goods"/>
+                android:layout_height="match_parent" android:id="@+id/rv_goods" android:layout_marginBottom="50dp"/>
     </LinearLayout>
     <RelativeLayout android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
@@ -173,6 +173,13 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content" android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content" android:id="@+id/order_total"/>
+
+        <TextView
+                android:text="已优惠：￥15" android:textSize="13sp" android:textColor="@color/color_red"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"   android:layout_centerInParent="true"
+                android:layout_height="wrap_content" android:id="@+id/order_sub_price"/>
+
         <TextView android:layout_alignParentRight="true"
                   android:text="提交订单" android:layout_centerVertical="true" android:textColor="@color/white"
                   android:layout_width="wrap_content" android:background="@color/color_shop_text"
