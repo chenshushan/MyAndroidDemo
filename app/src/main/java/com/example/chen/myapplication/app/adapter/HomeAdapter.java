@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.baidu.location.BDLocation;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.bean.Shop;
 import com.example.chen.myapplication.app.fragment.ClassoneFragment;
@@ -43,13 +44,22 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 	private ShopService shopService;
 	private OnItemClickListener mOnItemClickListener;
 
+	private BDLocation bdLocation;
 
-	public HomeAdapter(Context context, FragmentManager manager) {
+	private int type;
+
+	public static final int CLASS_TYPE = 2;
+	public HomeAdapter(Context context, FragmentManager manager, int type) {
 		this.context = context;
 		mInflater = LayoutInflater.from(context);
 		this.manager = manager;
 		shopService = new ShopService();
 		list_shops = shopService.getShops();
+		this.type = type;
+	}
+
+	public HomeAdapter(Context context, FragmentManager manager) {
+		this(context, manager, 0);
 	}
 	@Override
 	public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -69,6 +79,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 	}
 	@Override
 	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+		if(type == CLASS_TYPE){
+			return new ShopHolder(mInflater.inflate(R.layout.fg_shop, parent, false));
+		}
+
 		switch (viewType) {// 根据自己覆写的getItemViewType得到
 			case 0 :
 				return new ADHolder(mInflater.inflate(R.layout.fg_ad, parent, false));
@@ -92,6 +107,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 	@Override
 	public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 		int itemViewType = getItemViewType(position);
+		if(type == CLASS_TYPE) {
+			itemViewType = 2;
+		}
 		switch (itemViewType) {
 			case 0 :
 				Banner banner = ((ADHolder) holder).banner;
@@ -119,7 +137,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 		}
 		int position = mRv.getChildAdapterPosition(view);
 		if(mOnItemClickListener != null) {
-			mOnItemClickListener.onItemClick(position - 2);
+			if(type != CLASS_TYPE){
+				position = position - 2;
+			}
+			mOnItemClickListener.onItemClick(position);
 		}
 	}
 
@@ -138,6 +159,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
 	@Override
 	public int getItemCount() {
+		if(type == CLASS_TYPE) {
+			return list_shops == null ? 0 : list_shops.size();
+		}
 		return list_shops == null ? 2 : list_shops.size() + 2;
 	}
 
@@ -283,7 +307,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 	}
 
 	public void initShopList(ShopHolder shopHolder, int position, List<Shop> shops){
-		Shop shop = shops.get(position - 2);
+		if(type != CLASS_TYPE) {
+			position = position - 2;
+		}
+		Shop shop = shops.get(position);
 		Picasso.with(context).load(shop.getPicUrl()).error(R.mipmap.log).placeholder(R.mipmap.log).into(shopHolder.ivShopIcon);
 		shopHolder.tvShopTitle.setText(shop.getName() + "饭店");
 		shopHolder.tvShopSell.setText("已售" + shop.getHasSell() + "份");
@@ -308,4 +335,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 		notifyDataSetChanged();
 	}
 
+	public void setBdLocation(BDLocation bdLocation) {
+		this.bdLocation = bdLocation;
+	}
 }

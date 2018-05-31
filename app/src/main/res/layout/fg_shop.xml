@@ -5,13 +5,16 @@
     <!--分隔线-->
     <View android:id="@+id/shop_fenge" android:layout_width="match_parent" android:layout_height="1dp"
           android:background="@color/color_fengexian"></View>
-    <!--商品图片-->
-    <ImageView android:layout_width="90dp" android:layout_height="70dp" android:id="@+id/iv_shop_icon"
-               android:layout_marginLeft="10dp" android:layout_below="@+id/shop_fenge" android:layout_marginTop="10px"
-               android:src="@mipmap/log" android:scaleType="center"/>
+    <LinearLayout android:layout_width="100dp" android:layout_height="100dp" android:orientation="vertical" android:id="@+id/ll_shop_icon" android:gravity="center_vertical">
+        <!--商品图片-->
+        <ImageView android:layout_width="90dp" android:layout_height="70dp" android:id="@+id/iv_shop_icon"
+                   android:layout_below="@+id/shop_fenge"   android:layout_marginLeft="10dp"
+                   android:src="@mipmap/log" android:scaleType="center"/>
+    </LinearLayout>
+
     <!--商品信息-->
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:layout_alignTop="@+id/iv_shop_icon" android:layout_toRightOf="@+id/iv_shop_icon"
+                  android:layout_alignTop="@+id/ll_shop_icon" android:layout_toRightOf="@+id/ll_shop_icon"
                   android:layout_marginLeft="5dp" android:orientation="vertical">
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"

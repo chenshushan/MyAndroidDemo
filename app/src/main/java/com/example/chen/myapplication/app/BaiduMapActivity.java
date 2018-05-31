@@ -41,7 +41,6 @@ public class BaiduMapActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		SDKInitializer.initialize(getApplicationContext());
 
 		setContentView(R.layout.activity_baidu_map);
 
@@ -67,9 +66,7 @@ public class BaiduMapActivity extends BaseActivity {
 			public void onReceiveLocation(final BDLocation location) {
 				BitmapDescriptor mCurrentMarker = bdMapUtil.initBaiDuMap(mBaiduMap, location);// 调起地图
 				bdMapUtil.locationAndSetCursor(mBaiduMap, location, mCurrentMarker);// 将地图设置到当前位置并设置光标
-
 				LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
 				bdMapUtil.showAround(latLng, locationAdapter);
 			}
 		});
@@ -103,49 +100,8 @@ public class BaiduMapActivity extends BaseActivity {
 		mLocationClient.start();
 	}
 
-	PoiSearch poiSearch;
 	private BDMapUtil bdMapUtil = BDMapUtil.getInstance();
 
-
-	class MyOnGetPoiSearchResultListener implements OnGetPoiSearchResultListener {
-		@Override
-		public void onGetPoiResult(PoiResult result) {
-			// 获取POI检索结果
-			if (result == null || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {// 没有找到检索结果
-				ToastUtil.showToast("未找到结果");
-				return;
-			}
-
-			if (result.error == SearchResult.ERRORNO.NO_ERROR) {// 检索结果正常返回
-				if (result != null) {
-					List<PoiInfo> poiInfos = result.getAllPoi();
-					if (poiInfos != null && poiInfos.size() > 0) {
-						for (PoiInfo poiInfo : poiInfos) {
-							System.out.println(poiInfo.name);
-						}
-
-						dataList.addAll(poiInfos);
-						locationAdapter.notifyDataSetChanged();
-//							Message msg = new Message();
-//							msg.what = 0;
-//							handler.sendMessage(msg);
-					}
-				}
-			}
-		}
-
-		@Override
-		public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
-			System.out.println(poiDetailResult.getAddress());
-		}
-
-		@Override
-		public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
-
-		}
-	}
-
-	;
 
 
 	@Override
@@ -153,9 +109,6 @@ public class BaiduMapActivity extends BaseActivity {
 		mBaiduMap.setMyLocationEnabled(false);
 		if(mLocationClient.isStarted()) {
 			mLocationClient.stop(); //停止定位
-		}
-		if(poiSearch != null) {
-			poiSearch.destroy();
 		}
 		super.onDestroy();
 	}

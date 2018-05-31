@@ -11,15 +11,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
+import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
+import com.baidu.mapapi.search.poi.PoiDetailResult;
+import com.baidu.mapapi.search.poi.PoiIndoorResult;
+import com.baidu.mapapi.search.poi.PoiResult;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.adapter.HomeAdapter;
 import com.example.chen.myapplication.app.bean.Shop;
+import com.example.chen.myapplication.app.fragment.HomeFragment;
+import com.example.chen.myapplication.app.listener.MyOnGetPoiSearchResultListener;
 import com.example.chen.myapplication.app.service.ShopService;
+import com.example.chen.myapplication.app.util.BDMapUtil;
 import com.example.chen.myapplication.app.view.TitleView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static com.example.chen.myapplication.app.adapter.HomeAdapter.CLASS_TYPE;
+import static com.example.chen.myapplication.app.service.ShopService.initShop;
+
 // 店铺分类的列表页
 public class ClassShopActivity extends BaseActivity implements HomeAdapter.OnItemClickListener {
 
@@ -28,7 +40,8 @@ public class ClassShopActivity extends BaseActivity implements HomeAdapter.OnIte
 	RecyclerView recyclerView;
 
 	TitleView titleView;
-	ClassTypeAdatper classTypeAdatperTemp;
+
+	HomeAdapter classTypeAdatperTemp;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,13 +56,15 @@ public class ClassShopActivity extends BaseActivity implements HomeAdapter.OnIte
 		String type = intent.getStringExtra("type");
 		titleView.setTitleText(type);
 		// 初始化recyclerView
-		final ClassTypeAdatper classTypeAdatper = new ClassTypeAdatper(this, getSupportFragmentManager());
+		final HomeAdapter classTypeAdatper = new HomeAdapter(this, getSupportFragmentManager(), CLASS_TYPE);
 		classTypeAdatperTemp = classTypeAdatper;
 		classTypeAdatper.setOnItemClickListener(this);
 		final ShopService shopService = new ShopService();
-		classTypeAdatper.setList_shops(shopService.getShops());
+		classTypeAdatper.setShopData(shopService.getShops(),false);
 		recyclerView.setAdapter(classTypeAdatper);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+		BDMapUtil.getInstance().searchNeayBy(HomeFragment.getBdLocation(), new MyOnGetPoiSearchResultListener(classTypeAdatper, true),"美食", 1);
 
 		// 进入时隐藏键盘
 		searchView.setIconifiedByDefault(false);
@@ -67,10 +82,12 @@ public class ClassShopActivity extends BaseActivity implements HomeAdapter.OnIte
 					// 这将让键盘在所有的情况下都被隐藏，但是一般我们在点击搜索按钮后，输入法都会乖乖的自动隐藏的。
 					imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0); // 输入法如果是显示状态，那么就隐藏输入法
 				}
+				int pageNums = new Random().nextInt(9) + 1;
+				BDMapUtil.getInstance().searchNeayBy(HomeFragment.getBdLocation(), new MyOnGetPoiSearchResultListener(classTypeAdatper, true),pageNums,"美食");
 
-				List<Shop> shops = shopService.getShops();
-				List<Shop> shopList = shops.subList(0, new Random().nextInt(9) + 1);
-				classTypeAdatper.setShopData(shopList, true);
+//				List<Shop> shops = shopService.getShops();
+//				List<Shop> shopList = shops.subList(0, pageNums);
+//				classTypeAdatper.setShopData(shopList, true);
 				searchView.clearFocus(); // 不获取焦点
 				return true;
 			}
@@ -80,8 +97,8 @@ public class ClassShopActivity extends BaseActivity implements HomeAdapter.OnIte
 				if(!"".equals(s)) {
 					return false;
 				}
-				List<Shop> shops = shopService.getShops();
-				classTypeAdatper.setShopData(shops, true);
+				int pageNums = new Random().nextInt(9) + 1;
+				BDMapUtil.getInstance().searchNeayBy(HomeFragment.getBdLocation(), new MyOnGetPoiSearchResultListener(classTypeAdatper, true),pageNums,"美食");
 				searchView.clearFocus(); // 不获取焦点
 				return true;
 
@@ -89,6 +106,7 @@ public class ClassShopActivity extends BaseActivity implements HomeAdapter.OnIte
 		});
 		// 下拉加载更多
 		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+			int page = 2;
 			@Override
 			public void onScrollStateChanged(RecyclerView rv, int newState) {
 				super.onScrollStateChanged(rv, newState);
@@ -101,8 +119,10 @@ public class ClassShopActivity extends BaseActivity implements HomeAdapter.OnIte
 					int totalItemCount = manager.getItemCount();
 					String s = searchView.getQuery().toString();
 					if (lastItem == totalItemCount -1 && s.equals("")){ // 滚动到最后一项时加载数据 并且搜索框没有数据
-						List<Shop> shops = new ShopService().getShops();
-						classTypeAdatper.setShopData(shops, false);
+//						List<Shop> shops = new ShopService().getShops();
+//						classTypeAdatper.setShopData(shops, false);
+						BDMapUtil.getInstance().searchNeayBy(HomeFragment.getBdLocation(), new MyOnGetPoiSearchResultListener(classTypeAdatper, false),"美食", page++);
+
 					}
 
 				}
@@ -116,76 +136,9 @@ public class ClassShopActivity extends BaseActivity implements HomeAdapter.OnIte
 	public void onItemClick(int position) {
 		Intent intent = new Intent(this, ShopDetailActivity.class);
 
-		Shop shop = classTypeAdatperTemp.list_shops.get(position);
+		Shop shop = classTypeAdatperTemp.getList_shops().get(position);
 		intent.putExtra("shop",shop);
 		startActivity(intent);
-	}
-
-
-	class ClassTypeAdatper extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements   View.OnClickListener{
-		private LayoutInflater mInflater;
-
-		private Context context;
-		private FragmentManager manager;
-		private List<Shop> list_shops;
-		private HomeAdapter homeAdapter;
-		private HomeAdapter.OnItemClickListener mOnItemClickListener;
-
-		public ClassTypeAdatper(Context context, FragmentManager manager) {
-			this.context = context;
-			mInflater = LayoutInflater.from(context);
-			this.manager = manager;
-			this.homeAdapter = new HomeAdapter(context, manager);
-		}
-
-		@Override
-		public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-			return new HomeAdapter.ShopHolder(mInflater.inflate(R.layout.fg_shop, parent, false));
-		}
-
-		@Override
-		public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-			final HomeAdapter.ShopHolder shopHolder = (HomeAdapter.ShopHolder) holder;
-			homeAdapter.initShopList(shopHolder, position + 2, list_shops);
-			shopHolder.getItem().setOnClickListener(this);
-		}
-
-		public void setList_shops(List<Shop> list_shops) {
-			setShopData(list_shops, false);
-		}
-
-		public void setShopData(List<Shop> data, boolean isRefresh) {
-			if (this.list_shops == null) {
-				this.list_shops = new ArrayList<>();
-			}
-			if (isRefresh) {
-				this.list_shops.clear();
-			}
-			this.list_shops.addAll(data);
-			notifyDataSetChanged();
-		}
-
-		//点击的方法
-		public void setOnItemClickListener(HomeAdapter.OnItemClickListener mOnItemClickListener) {
-			this.mOnItemClickListener = mOnItemClickListener;
-		}
-
-
-		@Override
-		public int getItemCount() {
-			return list_shops == null ? 0 : list_shops.size();
-		}
-
-		@Override
-		public void onClick(View view) {
-			if(recyclerView == null){
-				return;
-			}
-			int position = recyclerView.getChildAdapterPosition(view);
-			if(mOnItemClickListener != null) {
-				mOnItemClickListener.onItemClick(position);
-			}
-		}
 	}
 
 }

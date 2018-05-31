@@ -14,18 +14,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.baidu.location.BDLocation;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.poi.*;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.ShopDetailActivity;
 import com.example.chen.myapplication.app.adapter.HomeAdapter;
 import com.example.chen.myapplication.app.bean.Shop;
 import com.example.chen.myapplication.app.listener.MyLocationListener;
+import com.example.chen.myapplication.app.listener.MyOnGetPoiSearchResultListener;
 import com.example.chen.myapplication.app.service.ShopService;
+import com.example.chen.myapplication.app.util.BDMapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.chen.myapplication.MyApplication.mLocationClient;
+import static com.example.chen.myapplication.app.service.ShopService.initShop;
 
+// 首页
 public class HomeFragment extends Fragment implements HomeAdapter.OnItemClickListener {
 
 	RecyclerView recyclerView;
@@ -43,13 +51,24 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemClickLis
 
 		myLocation = (TextView)view.findViewById(R.id.home_location);
 		getPersimmions();// 请求定位权限
-		mLocationClient.start();
-		// 注册监听函数
-		mLocationClient.registerLocationListener(new MyLocationListener(this));
 		return view;
 	}
 
 	HomeAdapter homeAdapterTemp;
+
+	public HomeAdapter getHomeAdapterTemp() {
+		return homeAdapterTemp;
+	}
+	private static BDLocation bdLocation;
+
+	public static void setBdLocation(BDLocation bdLocation) {
+		HomeFragment.bdLocation = bdLocation;
+	}
+
+	public static BDLocation getBdLocation() {
+		return bdLocation;
+	}
+
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		// 设置adapter
@@ -58,32 +77,42 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemClickLis
 		homeAdapter.setOnItemClickListener(this);
 		recyclerView.setAdapter(homeAdapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+		// 注册监听函数
+		myLocationListener = new MyLocationListener(this);
+		mLocationClient.registerLocationListener(myLocationListener);
+		mLocationClient.start();
+
+
 		// 设置上拉加载更多
-		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+		RecyclerView.OnScrollListener listener = new RecyclerView.OnScrollListener() {
+			int page = 2;
 			@Override
 			public void onScrollStateChanged(RecyclerView rv, int newState) {
 				super.onScrollStateChanged(rv, newState);
 				LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
 				//不滚动时
-				if (newState == RecyclerView.SCROLL_STATE_IDLE){
+				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
 					//最后一个item
 					int lastItem = manager.findLastVisibleItemPosition();
 					//所有的item
 					int totalItemCount = manager.getItemCount();
-					if (lastItem == totalItemCount -1){ // 滚动到最后一项时加载数据
-						List<Shop> shops = new ShopService().getShops();
-						homeAdapter.setShopData(shops, false);
+					if (lastItem == totalItemCount - 1) { // 滚动到最后一项时加载数据
+//						bdLocation = myLocationListener.getBdLocation();
+						BDMapUtil.getInstance().searchNeayBy(bdLocation, new MyOnGetPoiSearchResultListener(homeAdapter),"美食", page++);
 					}
 
 				}
 			}
-		});
+		};
+		recyclerView.addOnScrollListener(listener);
 
 	}
-
+	MyLocationListener myLocationListener;
 	@Override
 	public void onItemClick(int position) {
 		Intent intent = new Intent(getActivity(), ShopDetailActivity.class);
+
 		Shop shop = homeAdapterTemp.getList_shops().get(position);
 		intent.putExtra("shop",shop);
 		startActivity(intent);
@@ -138,4 +167,12 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemClickLis
 		}
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		PoiSearch poiSearch = myLocationListener.getPoiSearch();
+		if(poiSearch != null) {
+			poiSearch.destroy();
+		}
+	}
 }

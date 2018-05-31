@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
 import com.example.chen.myapplication.app.listener.MyLocationListener;
 import com.example.chen.myapplication.app.util.PreferenceUtil;
 import com.example.chen.myapplication.app.util.ToastUtil;
@@ -21,6 +22,8 @@ public class MyApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		context = this;
+		// 百度POI检索
+		SDKInitializer.initialize(getApplicationContext());
 
 		// 吐司初始化
 		ToastUtil.init(this);
@@ -29,7 +32,6 @@ public class MyApplication extends Application {
 		PreferenceUtil.init(this, new Gson());
 		// 初始化百度定位LocationClient类
 		mLocationClient = new LocationClient(getApplicationContext());
-
 
 		// 需将配置好的LocationClientOption对象，通过setLocOption方法传递给LocationClient对象使用
 		// 更多LocationClientOption的配置，请参照类参考中LocationClientOption类的详细说明
@@ -87,7 +89,7 @@ public class MyApplication extends Application {
 //可选，是否需要地址信息，默认为不需要，即参数为false
 //如果开发者需要获得当前点的地址信息，此处必须为true
 
-//		option.setIsNeedLocationDescribe(true);
+		option.setIsNeedLocationDescribe(true);
 //可选，是否需要位置描述信息，默认为不需要，即参数为false
 //如果开发者需要获得当前点的位置信息，此处必须为true
 

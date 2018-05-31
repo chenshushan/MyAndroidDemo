@@ -82,29 +82,33 @@ public class BDMapUtil {
 		mBaiduMap.addOverlay(option);
 	}
 
-	// 检索周边poi
-	public PoiSearch searchNeayBy(BDLocation location,OnGetPoiSearchResultListener onGetPoiSearchResultListener, String searchWord){
+	public PoiSearch searchNeayBy(BDLocation location,OnGetPoiSearchResultListener onGetPoiSearchResultListener, String searchWord,int page, int pageNums){
 		// POI初始化搜索模块，注册搜索事件监听
 		PoiSearch mPoiSearch = PoiSearch.newInstance();
 		mPoiSearch.setOnGetPoiSearchResultListener(onGetPoiSearchResultListener);
 
-		PoiNearbySearchOption poiNearbySearchOption = new PoiNearbySearchOption();
-		poiNearbySearchOption.keyword(searchWord);
-
 		double latitude = location.getLatitude();
 		double longitude = location.getLongitude();
-
-		poiNearbySearchOption.location(new LatLng(latitude, longitude));
+		final LatLng point  = new LatLng(latitude, longitude);
+		PoiNearbySearchOption poiNearbySearchOption = new PoiNearbySearchOption();
+		poiNearbySearchOption.keyword(searchWord).location(point);
 		poiNearbySearchOption.radius(2000);  // 检索半径，单位是米
-		poiNearbySearchOption.pageCapacity(20);  // 默认每页10条
-
-
-
-
-		mPoiSearch.searchNearby(poiNearbySearchOption);  // 发起附近检索请求
-		PoiDetailSearchOption poiDetailSearchOption = (new PoiDetailSearchOption()).poiUid("17496001615035143545").poiUid("12494571855783338880");
-		mPoiSearch.searchPoiDetail(poiDetailSearchOption);
+		poiNearbySearchOption.pageNum(page).pageCapacity(pageNums);  // 默认每页10条
+		mPoiSearch.searchNearby(poiNearbySearchOption);
 		return mPoiSearch;
+	}
+
+	public PoiSearch searchNeayBy(BDLocation location,OnGetPoiSearchResultListener onGetPoiSearchResultListener, String searchWord, int page){
+		return searchNeayBy(location,onGetPoiSearchResultListener,searchWord,page,10);
+	}
+
+	public PoiSearch searchNeayBy(BDLocation location,OnGetPoiSearchResultListener onGetPoiSearchResultListener,int pageNums, String searchWord){
+		return searchNeayBy(location,onGetPoiSearchResultListener,searchWord,1,pageNums);
+	}
+
+	// 检索周边poi
+	public PoiSearch searchNeayBy(BDLocation location,OnGetPoiSearchResultListener onGetPoiSearchResultListener, String searchWord){
+		return searchNeayBy(location,onGetPoiSearchResultListener,searchWord,1,10);
 	}
 
 	// 检索周边的位置
