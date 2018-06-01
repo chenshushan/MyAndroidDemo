@@ -7,19 +7,12 @@ import android.view.View;
 import android.widget.TextView;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
-import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.MapStatus;
-import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
-import com.baidu.mapapi.search.core.SearchResult;
-import com.baidu.mapapi.search.poi.*;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.adapter.LocationAdapter;
 import com.example.chen.myapplication.app.util.BDMapUtil;
-import com.example.chen.myapplication.app.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +80,8 @@ public class BaiduMapActivity extends BaseActivity {
 			public void onMapStatusChangeFinish(MapStatus mapStatus) {
 				LatLng latLng = mapStatus.target;
 				bdMapUtil.showAround(latLng, locationAdapter);
-
+				mBaiduMap.clear();
+				bdMapUtil.setCursor(mBaiduMap, latLng, BitmapDescriptorFactory.fromResource(R.mipmap.icon_openmap_mark2));
 			}
 
 			@Override

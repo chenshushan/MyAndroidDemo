@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.example.chen.myapplication.app.fragment.MineFragment">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.example.chen.myapplication.app.fragment.MineFragment">
     <com.example.chen.myapplication.app.view.TitleView android:layout_width="match_parent"
                                                        android:layout_height="wrap_content" android:id="@+id/mine_title"></com.example.chen.myapplication.app.view.TitleView>
 
@@ -99,7 +99,7 @@
 
         <RelativeLayout  android:gravity="center_vertical" android:paddingTop="10dp"
                          android:layout_width="match_parent" android:clickable="true" android:id="@+id/rl_my_location"
-                         android:layout_height="50dp" >
+                         android:layout_height="50dp" android:visibility="gone">
 
             <TextView
                     android:text="我的定位" android:layout_gravity="center_vertical" android:layout_marginLeft="20dp"
