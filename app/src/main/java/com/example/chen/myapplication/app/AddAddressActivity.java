@@ -13,6 +13,7 @@ import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.bean.Address;
 import com.example.chen.myapplication.app.util.PermissionUtils;
 import com.example.chen.myapplication.app.util.PreferenceUtil;
+import com.example.chen.myapplication.app.util.ToastUtil;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -161,6 +162,10 @@ public class AddAddressActivity extends BaseActivity implements CompoundButton.O
 					Cursor cursor = managedQuery(contactData, null, null, null, null);
 					cursor.moveToFirst();
 					String phoneNum = this.getContactPhone(cursor);
+					if("".equals(phoneNum)) {
+						ToastUtil.showToast("您选择的号码是空号");
+						break;
+					}
 					phone.setText(phoneNum);
 				}
 				break;
