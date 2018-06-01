@@ -156,7 +156,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 		/**
 		 * CountDownTimer 实现倒计时
 		 */
-		private CountDownTimer countDownTimer = new CountDownTimer(1*60*1000, 1000) {
+		private CountDownTimer countDownTimer = new CountDownTimer(15*60*1000, 1000) {
 			@Override
 			public void onTick(long millisUntilFinished) {
 				isRereshTime = false;
@@ -164,7 +164,12 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 				int seconds = (int) (millisUntilFinished / 1000);
 				int minutes = seconds / 60;
 				int remainingSeconds = seconds % 60;
-				down.setText(minutes + ":" + remainingSeconds);
+				if(remainingSeconds < 10) {
+					down.setText(minutes + ":0" + remainingSeconds);
+				}else {
+					down.setText(minutes + ":" + remainingSeconds);
+				}
+
 			}
 
 			@Override
