@@ -32,6 +32,11 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
 	boolean isRereshTime = true;
 
+	public void setOrders(List<Order> orders) {
+		Collections.reverse(orders);
+		this.orders = orders;
+	}
+
 	public OrdersAdapter(Context activity, List<Order> orders) {
 		this.activity = activity;
 		Collections.reverse(orders);
@@ -148,6 +153,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 					result.set(i, order);
 					PreferenceUtil.set(ORDER_LIST, orders);
 					// 更新订单列表
+					OrdersAdapter.this.setOrders(result);
 					OrdersAdapter.this.notifyDataSetChanged();
 				}
 			}
