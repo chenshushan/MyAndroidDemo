@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.chen.myapplication.app.AppActivity.HOME_PAGE;
 import static com.example.chen.myapplication.app.adapter.AddressAdapter.SELECT_ADDRESS_OK;
 import static com.example.chen.myapplication.app.bean.Order.ORDER_LIST;
 import static com.example.chen.myapplication.app.bean.User.USER_INFO;
@@ -93,17 +94,20 @@ public class SettlementActivity extends BaseActivity implements View.OnClickList
 		double peisong = shop.getPeisong();
 		sendMoney.setText(String.format("%.0f", peisong));
 		totalMoney = getTotalMoney();
-		orderTotal.setText(totalMoney);
 		double jian = shop.getJian();
 		double full = shop.getFull();
 
 		if(Double.valueOf(totalMoney) >= full){
-			String format = String.format("%.2f", Double.valueOf(totalMoney) - jian + peisong);
+			String format = String.format("%.2f", Double.valueOf(totalMoney) + peisong - jian);
 			sub.setText("已优惠：￥" + jian);
 			orderTotal.setText("￥" + format);
 
 			totalMoney = format;
 		}else {
+
+			String format = String.format("%.2f", Double.valueOf(totalMoney) + peisong);
+			orderTotal.setText("￥" + format);
+			totalMoney = format;
 			sub.setVisibility(View.GONE);
 		}
 
@@ -160,7 +164,7 @@ public class SettlementActivity extends BaseActivity implements View.OnClickList
 			order.setStatus(1);
 			order.setTotalPrice(totalMoney);
 			order.setRemark(remark.getText().toString());
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			order.setCreatedTime(format.format(new Date()));
 			order.setSendAppointment(sendTime.getText().toString());
 			order.setFoods(goodsItemList);
@@ -174,7 +178,9 @@ public class SettlementActivity extends BaseActivity implements View.OnClickList
 
 			// 保存成功，转向订单列表页
 			Intent intent = new Intent(this, AppActivity.class);
+			intent.putExtra(HOME_PAGE, 1);
 			startActivity(intent);
+			finish();
 		}
 	}
 	Address address;

@@ -117,8 +117,7 @@
         </activity>
         <activity android:name=".app.UserCenterActivity">
         </activity>
-        <activity android:name=".app.OrderActivity">
-        </activity>
+
         <activity android:name=".app.BaiduMapActivity">
         </activity>
         <activity android:name=".app.PhoneActivity">

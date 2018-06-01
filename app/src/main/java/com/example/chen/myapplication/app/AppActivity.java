@@ -90,6 +90,8 @@ public class AppActivity extends BaseActivity implements RadioGroup.OnCheckedCha
 		int index = intent.getIntExtra(HOME_PAGE, -1);
 		if(index ==2) {
 			radioGroup.check(R.id.rb_mine);
+		} else if(index == 1){
+			radioGroup.check(R.id.rb_order);
 		}
 	}
 

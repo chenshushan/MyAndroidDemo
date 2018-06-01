@@ -27,6 +27,7 @@ public class OrderFragment extends Fragment {
 
 	TitleView titleView;
 
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
@@ -50,9 +51,4 @@ public class OrderFragment extends Fragment {
 		ordersRv.setAdapter(new OrdersAdapter(getActivity(), orders));
 		return view;
 	}
-
-
-
-
-
 }

@@ -33,7 +33,7 @@
                 <TextView
                         android:id="@+id/txt_created_at"
                         style="@style/Txt.AuxiliaryInfo" android:layout_alignParentRight="true"  android:layout_centerVertical="true"
-                        tools:text="2016-01-22 16:54:00" android:layout_marginRight="10dp"
+                        tools:text="2016-01-22 16:54" android:layout_marginRight="10dp"
                 />
             </RelativeLayout>
 
@@ -60,37 +60,32 @@
     <View android:layout_width="match_parent"
           android:layout_height="1dp"
           android:background="@color/btn_numpicker_press"/>
-    <LinearLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:gravity="center_vertical|right">
+            android:paddingBottom="5dp"   >
 
         <TextView
-                android:id="@+id/btn_confirm_received"
+                android:id="@+id/tv_count_down"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:text="确认送达"
-                android:textSize="15sp"
-                android:textColor="@drawable/txt_blue_btn"
-                android:background="@drawable/selector_activity_button"
-                android:visibility="gone"/>
+                android:layout_height="wrap_content" android:layout_marginLeft="10dp"
+                android:text="15:00" android:layout_centerVertical="true"
+                android:textSize="15sp" android:visibility="gone"
+                android:textColor="@drawable/txt_blue_btn" />
 
         <TextView
                 android:id="@+id/btn_payment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
-                android:text="立即支付"
+                android:text="立即支付" android:layout_alignParentRight="true"
                 android:textSize="15sp"
                 android:clickable="true"
                 android:textColor="@drawable/txt_blue_btn"
-                android:background="@drawable/selector_blue_border_button"
-        />
-    </LinearLayout>
+                android:background="@drawable/selector_blue_border_button"/>
+    </RelativeLayout>
 
     <View android:layout_width="match_parent"
           android:layout_height="5dp"

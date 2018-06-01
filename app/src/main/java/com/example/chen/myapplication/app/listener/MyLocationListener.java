@@ -74,6 +74,9 @@ public class MyLocationListener extends BDAbstractLocationListener {
 				List<PoiInfo> poiInfos = poiResult.getAllPoi();
 				HomeAdapter homeAdapterTemp = homeFragment.getHomeAdapterTemp();
 				List<Shop> list = new ArrayList();
+				if(poiInfos == null){
+					return;
+				}
 				for (PoiInfo poiInfo : poiInfos) {
 					Shop shop = initShop(poiInfo.name);
 					list.add(shop);

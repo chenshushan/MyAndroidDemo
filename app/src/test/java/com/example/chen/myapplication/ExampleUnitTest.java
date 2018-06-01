@@ -1,16 +1,8 @@
 package com.example.chen.myapplication;
 
-import android.util.SparseArray;
-import com.example.chen.myapplication.app.bean.GoodsItem;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import org.apache.commons.beanutils.BeanUtils;
 import org.junit.Test;
 
-import java.lang.reflect.Type;
-import java.util.Map;
-
-import static org.junit.Assert.*;
+import java.util.Scanner;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -19,8 +11,12 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
 	@Test
-	public void addition_isCorrect() throws Exception {
-
+	public void addition_isCorrect()  {
+		int seconds = 1600;
+		int minutes = seconds / 60;
+		int remainingSeconds = seconds % 60;
+		System.out.println(seconds + " seconds is " + minutes +
+				" minutes and "+ remainingSeconds + " seconds");
 
 	}
 }

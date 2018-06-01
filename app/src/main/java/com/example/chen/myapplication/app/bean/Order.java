@@ -70,13 +70,24 @@ public class Order implements Serializable {
     }
     public String getStatusCN() {
         if(status == 0) {
+            return "配送中";
+        }else if(status == 1) {
+            return "待支付";
+        }else if(status == 2){
+            return "已完成";
+        } else {
+            return "已取消";
+        }
+    }
+
+    public String getStatusOperate() {
+        if(status == 0) {
             return "确认送达";
         }else if(status == 1) {
             return "立即支付";
         }else {
-            return "已取消";
+            return "再来一单";
         }
-
     }
 
     public void setStatus(int status) {
