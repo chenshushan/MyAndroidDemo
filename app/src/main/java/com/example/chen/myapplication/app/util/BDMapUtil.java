@@ -83,6 +83,9 @@ public class BDMapUtil {
 	}
 
 	public PoiSearch searchNeayBy(BDLocation location,OnGetPoiSearchResultListener onGetPoiSearchResultListener, String searchWord,int page, int pageNums){
+		if(location == null) {
+			return null;
+		}
 		// POI初始化搜索模块，注册搜索事件监听
 		PoiSearch mPoiSearch = PoiSearch.newInstance();
 		mPoiSearch.setOnGetPoiSearchResultListener(onGetPoiSearchResultListener);

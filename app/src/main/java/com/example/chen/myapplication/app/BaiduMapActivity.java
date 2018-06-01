@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.chen.myapplication.MyApplication.mLocationClient;
-
+// 百度地图页面
 public class BaiduMapActivity extends BaseActivity {
 
 	MapView mMapView;

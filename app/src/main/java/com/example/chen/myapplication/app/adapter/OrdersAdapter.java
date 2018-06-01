@@ -100,9 +100,11 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
 			tvSend.setText(order.getSendAppointment());
 			Picasso.with(activity).load(shop.getPicUrl()).error(R.mipmap.log).placeholder(R.mipmap.log).into(this.img);
-			if(order.getStatus() == 1 && isRereshTime) {
-				countDownTimer.start();
+			if(order.getStatus() == 1) {
 				down.setVisibility(View.VISIBLE);
+				if(isRereshTime) {
+					countDownTimer.start();
+				}
 			}
 		}
 

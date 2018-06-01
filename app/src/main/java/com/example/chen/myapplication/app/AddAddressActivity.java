@@ -21,7 +21,7 @@ import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static com.example.chen.myapplication.app.MyAddressActivity.ADDRESS_OK;
-
+// 添加地址
 public class AddAddressActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
 	public static int count = 1;

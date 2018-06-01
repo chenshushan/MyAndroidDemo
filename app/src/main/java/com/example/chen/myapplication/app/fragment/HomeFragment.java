@@ -15,23 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.baidu.location.BDLocation;
-import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.search.core.PoiInfo;
-import com.baidu.mapapi.search.poi.*;
+import com.baidu.mapapi.search.poi.PoiSearch;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.ShopDetailActivity;
 import com.example.chen.myapplication.app.adapter.HomeAdapter;
 import com.example.chen.myapplication.app.bean.Shop;
 import com.example.chen.myapplication.app.listener.MyLocationListener;
 import com.example.chen.myapplication.app.listener.MyOnGetPoiSearchResultListener;
-import com.example.chen.myapplication.app.service.ShopService;
 import com.example.chen.myapplication.app.util.BDMapUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.chen.myapplication.MyApplication.mLocationClient;
-import static com.example.chen.myapplication.app.service.ShopService.initShop;
 
 // 首页
 public class HomeFragment extends Fragment implements HomeAdapter.OnItemClickListener {
