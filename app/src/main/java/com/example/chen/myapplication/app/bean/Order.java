@@ -29,6 +29,7 @@ public class Order implements Serializable {
     String sendAppointment;// 预约送达时间
 
     String createdTime;// 创建时间
+    String overTime;// 超时时间
 
     List<GoodsItem> foods;// 购买菜品
 
@@ -150,5 +151,13 @@ public class Order implements Serializable {
 
     public void setFoods(List<GoodsItem> foods) {
         this.foods = foods;
+    }
+
+    public String getOverTime() {
+        return overTime;
+    }
+
+    public void setOverTime(String overTime) {
+        this.overTime = overTime;
     }
 }

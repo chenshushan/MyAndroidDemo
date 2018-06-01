@@ -32,6 +32,9 @@ public class MyOnGetPoiSearchResultListener  implements OnGetPoiSearchResultList
 	public void onGetPoiResult(PoiResult poiResult) {
 		List<PoiInfo> poiInfos = poiResult.getAllPoi();
 		List<Shop> list = new ArrayList();
+		if(poiInfos == null || poiInfos.size() == 0) {
+			return;
+		}
 		for (PoiInfo poiInfo : poiInfos) {
 			Shop shop = initShop(poiInfo.name);
 			list.add(shop);

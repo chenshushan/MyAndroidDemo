@@ -28,6 +28,7 @@ import java.util.Map;
 
 import static com.example.chen.myapplication.app.AppActivity.HOME_PAGE;
 import static com.example.chen.myapplication.app.adapter.AddressAdapter.SELECT_ADDRESS_OK;
+import static com.example.chen.myapplication.app.adapter.OrdersAdapter.timeOver;
 import static com.example.chen.myapplication.app.bean.Order.ORDER_LIST;
 import static com.example.chen.myapplication.app.bean.User.USER_INFO;
 
@@ -164,8 +165,13 @@ public class SettlementActivity extends BaseActivity implements View.OnClickList
 			order.setStatus(1);
 			order.setTotalPrice(totalMoney);
 			order.setRemark(remark.getText().toString());
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-			order.setCreatedTime(format.format(new Date()));
+
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date now = new Date();
+			order.setCreatedTime(format.format(now));
+			long over = now.getTime() + timeOver;
+			order.setOverTime(format.format(new Date(over)));
+
 			order.setSendAppointment(sendTime.getText().toString());
 			order.setFoods(goodsItemList);
 			Type type = new TypeToken<List<Order>>() {}.getType();

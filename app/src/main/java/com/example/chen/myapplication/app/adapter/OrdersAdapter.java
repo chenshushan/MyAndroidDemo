@@ -18,19 +18,22 @@ import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.chen.myapplication.app.bean.Order.ORDER_LIST;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
 
-
+	public static final long  timeOver = 1*60*1000;
 	private Context activity;
 	private List<Order> orders;
 	LayoutInflater inflater;
 
-	boolean isRereshTime = true;
 
 	public void setOrders(List<Order> orders) {
 		Collections.reverse(orders);
@@ -47,7 +50,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = inflater.inflate(R.layout.list_order_item, parent, false);
-		return new ViewHolder(view);
+		return new ViewHolder(view, this);
 	}
 
 	@Override
@@ -70,9 +73,10 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 		private ImageView img;
 
 		private Order order;
-		public ViewHolder(View itemView) {
+		private OrdersAdapter ordersAdapter;
+		public ViewHolder(View itemView, OrdersAdapter ordersAdapter) {
 			super(itemView);
-
+			this.ordersAdapter = ordersAdapter;
 			tvShopName = (TextView) itemView.findViewById(R.id.txt_business_name);
 			tvCost = (TextView) itemView.findViewById(R.id.txt_total_price);
 			tvCreate = (TextView) itemView.findViewById(R.id.txt_created_at);
@@ -84,7 +88,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 			operate.setOnClickListener(this);
 		}
 
-
+		MyCountDownTimer countDownTimer;
 
 		public void bindData(Order order){
 			this.order = order;
@@ -92,6 +96,18 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 			if(shop != null){
 				tvShopName.setText(shop.getName());
 			}
+
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String overTime = order.getOverTime();
+			long left = timeOver;
+			try {
+				Date over = format.parse(overTime);
+				left = over.getTime() - System.currentTimeMillis();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+			countDownTimer = new MyCountDownTimer(left, 1000);
 			String totalPrice = order.getTotalPrice();
 			tvCost.setText("￥" + totalPrice);
 			tvCreate.setText(order.getCreatedTime());
@@ -102,9 +118,11 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 			Picasso.with(activity).load(shop.getPicUrl()).error(R.mipmap.log).placeholder(R.mipmap.log).into(this.img);
 			if(order.getStatus() == 1) {
 				down.setVisibility(View.VISIBLE);
-				if(isRereshTime) {
+				if(left > 0) {
 					countDownTimer.start();
 				}
+			}else {
+				down.setVisibility(View.GONE);
 			}
 		}
 
@@ -147,28 +165,32 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 			order.setStatus(status);
 			// 遍历所有order 重置该order状态
 			Type type = new TypeToken<List<Order>>() {}.getType();
-			List<Order> result  = PreferenceUtil.getObject(ORDER_LIST, type);
+			List<Order> result  = PreferenceUtil.getObject(ORDER_LIST, type); // 无序
 			for (int i = 0; i < result.size(); i++) {
 				Order od = result.get(i);
 				int id = od.getId();
 				if(id == ViewHolder.this.order.getId()) {
 					result.set(i, order);
-					PreferenceUtil.set(ORDER_LIST, orders);
+					List<Order> list = new ArrayList(result);
+					PreferenceUtil.set(ORDER_LIST, list);
 					// 更新订单列表
-					OrdersAdapter.this.setOrders(result);
-					OrdersAdapter.this.notifyDataSetChanged();
+					ordersAdapter.setOrders(list);
+					ordersAdapter.notifyDataSetChanged();
 				}
 			}
 		}
 
+
 		/**
 		 * CountDownTimer 实现倒计时
 		 */
-		private CountDownTimer countDownTimer = new CountDownTimer(15*60*1000, 1000) {
+		class MyCountDownTimer extends CountDownTimer {
+			public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+				super(millisInFuture, countDownInterval);
+			}
+
 			@Override
 			public void onTick(long millisUntilFinished) {
-				isRereshTime = false;
-
 				int seconds = (int) (millisUntilFinished / 1000);
 				int minutes = seconds / 60;
 				int remainingSeconds = seconds % 60;
@@ -185,6 +207,6 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 				updateOrderStatus(3);
 				down.setVisibility(View.GONE);
 			}
-		};
+		}
 	}
 }
