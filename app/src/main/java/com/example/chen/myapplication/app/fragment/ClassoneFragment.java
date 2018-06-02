@@ -8,12 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.ClassShopActivity;
-
-import java.util.List;
 
 @SuppressLint("ValidFragment")
 public class ClassoneFragment extends Fragment {
