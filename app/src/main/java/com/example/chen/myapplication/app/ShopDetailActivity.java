@@ -62,6 +62,8 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shop_detail);
+		checkLogin();
+
 		Intent intent = getIntent();
 		shop = (Shop) intent.getSerializableExtra("shop");
 		id = String.valueOf(shop.getId());

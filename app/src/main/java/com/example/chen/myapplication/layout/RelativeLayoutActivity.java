@@ -3,7 +3,14 @@ package com.example.chen.myapplication.layout;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Toast;
 import com.example.chen.myapplication.R;
+import com.example.chen.myapplication.app.util.ToastUtil;
+import com.example.chen.myapplication.frame.eventbus.IntentServiceResult;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by Administrator on 2017/4/23.
@@ -13,5 +20,26 @@ public class RelativeLayoutActivity extends AppCompatActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.relative_demo);
+	}
+	@Override
+	protected void onPause() {
+		super.onPause();
+		EventBus.getDefault().unregister(this);  //注：为了后面分析的方便我们对进行注册的对象取名订阅者，如这里的MainActivity.this对象
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		EventBus.getDefault().register(this);
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void doThis(IntentServiceResult intentServiceResult) {
+		ToastUtil.showToast(intentServiceResult.getResultValue());
+	}
+
+
+	public void sendEvent(View view){
+		EventBus.getDefault().post(new IntentServiceResult(24, "sendEvent done!!"));
+		// 这里还可以跳转到另一个Activity 在那里使用Subscribe注解的方法处理
 	}
 }

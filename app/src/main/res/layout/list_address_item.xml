@@ -81,6 +81,7 @@
                 android:padding="10dp"
                 android:src="@mipmap/ic_delete"
                 android:background="@null"
+                android:visibility="gone"
                 />
 
             <ImageButton
@@ -90,6 +91,7 @@
                 android:padding="10dp"
                 android:src="@mipmap/ic_edit"
                 android:background="@null"
+                android:visibility="gone"
                 />
 
         </LinearLayout>

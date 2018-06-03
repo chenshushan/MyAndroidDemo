@@ -33,7 +33,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 	private Context activity;
 	private List<Order> orders;
 	LayoutInflater inflater;
-
+	RecyclerView ordersRv;
 
 	public void setOrders(List<Order> orders) {
 		Collections.reverse(orders);
@@ -48,6 +48,13 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 	}
 
 	@Override
+	public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+		super.onAttachedToRecyclerView(recyclerView);
+		this.ordersRv = recyclerView;
+	}
+
+
+	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = inflater.inflate(R.layout.list_order_item, parent, false);
 		return new ViewHolder(view, this);
@@ -56,7 +63,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		Order order = orders.get(position);
-		holder.bindData(order);
+		holder.bindData(order, position);
 	}
 
 	@Override
@@ -74,6 +81,8 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
 		private Order order;
 		private OrdersAdapter ordersAdapter;
+
+		private View itemView;
 		public ViewHolder(View itemView, OrdersAdapter ordersAdapter) {
 			super(itemView);
 			this.ordersAdapter = ordersAdapter;
@@ -86,11 +95,13 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 			down = (TextView) itemView.findViewById(R.id.tv_count_down);
 			img = (ImageView) itemView.findViewById(R.id.shop_image);
 			operate.setOnClickListener(this);
+
+			this.itemView = itemView;
 		}
 
 		MyCountDownTimer countDownTimer;
 
-		public void bindData(Order order){
+		public void bindData(Order order, int position){
 			this.order = order;
 			Shop shop = order.getShop();
 			if(shop != null){
@@ -107,7 +118,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 				e.printStackTrace();
 			}
 
-			countDownTimer = new MyCountDownTimer(left, 1000);
+			countDownTimer = new MyCountDownTimer(left, 1000, position);
 			String totalPrice = order.getTotalPrice();
 			tvCost.setText("￥" + totalPrice);
 			tvCreate.setText(order.getCreatedTime());
@@ -128,12 +139,19 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
 		@Override
 		public void onClick(View view) {
+
+			int id = view.getId();
+			if(id != R.id.btn_payment) {
+				return;
+			}
+			final int position = ordersRv.getChildAdapterPosition(itemView);
+
 			final int status = order.getStatus();
 			if(status == 0) {
 				DialogUtil.showQuestionDialog(activity, "提示", "确认送达吗？", new DialogUtil.OnClickYesListener() {
 					@Override
 					public void onClickYes() {
-						updateOrderStatus(status);
+						updateOrderStatus(status, position);
 						ToastUtil.showToast("订单配送完成");
 					}
 				});
@@ -141,7 +159,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 				DialogUtil.showQuestionDialog(activity, "提示", "确认支付吗？", new DialogUtil.OnClickYesListener() {
 					@Override
 					public void onClickYes() {
-						updateOrderStatus(status);
+						updateOrderStatus(status, position);
 						down.setVisibility(View.GONE);
 						ToastUtil.showToast("支付成功,订单配送中");
 					}
@@ -154,7 +172,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 		}
 
 
-		public void updateOrderStatus(int status){
+		public void updateOrderStatus(int status, int position){
 			if(status == 0) {// 确认送达
 				status = 2; // 已完成
 			}else if(status == 1){// 立即支付
@@ -162,22 +180,21 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 			}else {
 
 			}
-			order.setStatus(status);
+			position = orders.size() - position - 1;
+
 			// 遍历所有order 重置该order状态
 			Type type = new TypeToken<List<Order>>() {}.getType();
 			List<Order> result  = PreferenceUtil.getObject(ORDER_LIST, type); // 无序
-			for (int i = 0; i < result.size(); i++) {
-				Order od = result.get(i);
-				int id = od.getId();
-				if(id == ViewHolder.this.order.getId()) {
-					result.set(i, order);
-					List<Order> list = new ArrayList(result);
-					PreferenceUtil.set(ORDER_LIST, list);
-					// 更新订单列表
-					ordersAdapter.setOrders(list);
-					ordersAdapter.notifyDataSetChanged();
-				}
-			}
+
+			Order orderCurrent = result.get(position);
+			orderCurrent.setStatus(status);
+			result.set(position, orderCurrent);
+
+			List<Order> list = new ArrayList(result);
+			PreferenceUtil.set(ORDER_LIST, list);
+			// 更新订单列表
+			ordersAdapter.setOrders(list);
+			ordersAdapter.notifyDataSetChanged();
 		}
 
 
@@ -185,8 +202,10 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 		 * CountDownTimer 实现倒计时
 		 */
 		class MyCountDownTimer extends CountDownTimer {
-			public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+			int position;
+			public MyCountDownTimer(long millisInFuture, long countDownInterval, int position) {
 				super(millisInFuture, countDownInterval);
+				this.position = position;
 			}
 
 			@Override
@@ -204,7 +223,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
 			@Override
 			public void onFinish() {
-				updateOrderStatus(3);
+				updateOrderStatus(3, position);
 				down.setVisibility(View.GONE);
 			}
 		}
