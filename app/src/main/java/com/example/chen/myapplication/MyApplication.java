@@ -10,6 +10,7 @@ import com.example.chen.myapplication.app.listener.MyLocationListener;
 import com.example.chen.myapplication.app.util.PreferenceUtil;
 import com.example.chen.myapplication.app.util.ToastUtil;
 import com.google.gson.Gson;
+import com.vondear.rxtools.RxTool;
 
 /**
  * Created by Administrator on 2017/4/19.
@@ -37,6 +38,8 @@ public class MyApplication extends Application {
 		// 更多LocationClientOption的配置，请参照类参考中LocationClientOption类的详细说明
 		LocationClientOption locationClientOption = initBaiduMapConfig();
 		mLocationClient.setLocOption(locationClientOption);
+
+		RxTool.init(this);
 
 	}
 

@@ -1,7 +1,11 @@
 package com.example.chen.myapplication.app;
 
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.widget.RadioButton;
@@ -11,6 +15,7 @@ import com.example.chen.myapplication.app.adapter.MainFragmentAdapter;
 import com.example.chen.myapplication.app.fragment.HomeFragment;
 import com.example.chen.myapplication.app.fragment.MineFragment;
 import com.example.chen.myapplication.app.fragment.OrderFragment;
+import com.example.chen.myapplication.app.service.NotifyService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +33,27 @@ public class AppActivity extends BaseActivity implements RadioGroup.OnCheckedCha
 
 	private List<Fragment> fragmentList;//  Fragment数组
 
+	NotifyService.NotifyBinder notifyBinder;
+
+	private ServiceConnection conn = new ServiceConnection() {
+
+		//Activity与Service断开连接时回调该方法
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+			System.out.println("------Service DisConnected-------");
+		}
+
+		//Activity与Service连接成功时回调该方法
+		@Override
+		public void onServiceConnected(ComponentName name, IBinder binder) {
+			System.out.println("------Service Connected-------");
+			notifyBinder = (NotifyService.NotifyBinder) binder;
+
+			notifyBinder.createNotify();
+
+		}
+	};
+
 	public void initView(){
 		viewPager = (ViewPager) findViewById(R.id.mainViewPage);
 		homeBtn = (RadioButton) findViewById(R.id.rb_firstpage);
@@ -35,7 +61,11 @@ public class AppActivity extends BaseActivity implements RadioGroup.OnCheckedCha
 		mineBtn = (RadioButton) findViewById(R.id.rb_mine);
 
 		radioGroup = (RadioGroup) findViewById(R.id.mainRadioGroup);
+
+		Intent intent = new Intent(this, NotifyService.class);
+		bindService(intent, conn, Service.BIND_AUTO_CREATE);
 	}
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -128,5 +158,12 @@ public class AppActivity extends BaseActivity implements RadioGroup.OnCheckedCha
 			viewPager.setCurrentItem(current);
 		}
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unbindService(conn);
+		System.out.println("AppActivity onDestroy");
 	}
 }
