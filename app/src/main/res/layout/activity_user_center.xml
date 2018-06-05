@@ -12,11 +12,31 @@
 
     </com.example.chen.myapplication.app.view.TitleView>
 
+    <LinearLayout
+            android:id="@+id/ll_head" android:background="@color/colorPrimary"
+            android:layout_below="@+id/rl_accountdetail_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+
+        <ImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/shape_circle_blue"
+                android:padding="3dp" android:layout_marginBottom="5dp"
+                android:src="@mipmap/circle_elves_ball"/>
+    </LinearLayout>
+
     <RelativeLayout
             android:id="@+id/rl_accountdetail_userName"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_below="@+id/rl_accountdetail_top"
+            android:layout_below="@+id/ll_head"
             android:layout_marginTop="10dp"
             android:background="#fff">
 
@@ -104,8 +124,6 @@
             android:layout_below="@+id/rl_accountdetail_password"
             android:layout_marginTop="15dp"
             android:text="退出登录"
-            android:onClick="logout"
             android:textColor="#f00"
-            android:gravity="center"
-    />
+            android:gravity="center"/>
 </RelativeLayout>
