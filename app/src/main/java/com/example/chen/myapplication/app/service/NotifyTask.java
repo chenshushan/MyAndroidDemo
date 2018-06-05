@@ -9,6 +9,7 @@ import com.example.chen.myapplication.R;
 import com.example.chen.myapplication.app.BaiduMapActivity;
 import com.example.chen.myapplication.app.util.ToastUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -32,8 +33,9 @@ public class NotifyTask extends AsyncTask<String, Integer, String> {
 		localBuilder.setSmallIcon(R.mipmap.ic_launcher);
 		localBuilder.setTicker("Foreground Service Start");
 		localBuilder.setContentTitle("Socket服务端");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		localBuilder.setContentText(s + " " );
+		localBuilder.setContentText(s + " " + simpleDateFormat.format(new Date()));
 		service.startForeground(1, localBuilder.build());
 	}
 
@@ -54,6 +56,10 @@ public class NotifyTask extends AsyncTask<String, Integer, String> {
 				i++;
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+			}
+			if(isCancelled()) {
+				return "NotifyTask Cancelled";
+
 			}
 			if(i == 3) {
 				break;

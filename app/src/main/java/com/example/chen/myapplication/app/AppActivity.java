@@ -54,6 +54,12 @@ public class AppActivity extends BaseActivity implements RadioGroup.OnCheckedCha
 		}
 	};
 
+	@Override
+	protected void onStop() {
+		super.onStop();
+		notifyBinder.stopNotify();
+	}
+
 	public void initView(){
 		viewPager = (ViewPager) findViewById(R.id.mainViewPage);
 		homeBtn = (RadioButton) findViewById(R.id.rb_firstpage);

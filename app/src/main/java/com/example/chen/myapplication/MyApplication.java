@@ -39,7 +39,7 @@ public class MyApplication extends Application {
 		LocationClientOption locationClientOption = initBaiduMapConfig();
 		mLocationClient.setLocOption(locationClientOption);
 
-		RxTool.init(this);
+//		RxTool.init(this);
 
 	}
 
