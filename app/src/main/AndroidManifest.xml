@@ -24,7 +24,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!-- 读取联系人 -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <!--  照相机 -->
+    <!-- 照相机 -->
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
@@ -45,9 +45,10 @@
                 android:enabled="true"
                 android:process=":remote">
         </service>
-
-
-        <service android:name=".app.service.NotifyService" android:exported="true" android:enabled="true">
+        <service
+                android:name=".app.service.NotifyService"
+                android:enabled="true"
+                android:exported="true">
         </service>
 
         <activity
@@ -115,20 +116,20 @@
         </activity>
         <activity android:name=".app.MyAddressActivity">
         </activity>
-
         <activity android:name=".app.AddAddressActivity">
         </activity>
         <activity android:name=".app.LoginActivity">
         </activity>
         <activity android:name=".app.UserCenterActivity">
         </activity>
-
         <activity android:name=".app.BaiduMapActivity">
         </activity>
         <activity
                 android:name="com.yalantis.ucrop.UCropActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".frame.eventbus.EventBusActivity">
+        </activity>
     </application>
 
 </manifest>

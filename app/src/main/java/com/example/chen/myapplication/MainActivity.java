@@ -9,15 +9,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.example.chen.myapplication.app.AppActivity;
 import com.example.chen.myapplication.layout.LayoutActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+
+	@BindView(R.id.button11)
+	Button app;
+	@BindView(R.id.button12)
+	Button demo;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		ButterKnife.bind(this);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
@@ -54,12 +65,20 @@ public class MainActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void btnTurnToLayout(View v){
+	public void btnTurnToLayout(View v) {
 		Intent intent = new Intent(this, LayoutActivity.class);
 		startActivity(intent);
 	}
-	public void btnTurnToApp(View v){
+
+
+
+	@OnClick(R.id.button11)
+	public void onAppClicked() {
 		Intent intent = new Intent(this, AppActivity.class);
 		startActivity(intent);
+	}
+
+	@OnClick(R.id.button12)
+	public void onDemoClicked() {
 	}
 }

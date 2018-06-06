@@ -15,15 +15,23 @@
         tools:context="com.example.chen.myapplication.MainActivity">
 
     <Button
-            android:text="布局"
+            android:text="布局" android:visibility="gone"
             android:onClick="btnTurnToLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_marginTop="43dp" android:id="@+id/button3"/>
     <Button
             android:text="app"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_alignTop="@+id/button3"
-            android:layout_centerHorizontal="true" android:id="@+id/button11" android:onClick="btnTurnToApp"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/button11"  android:layout_alignBaseline="@+id/button12"
+            android:layout_alignBottom="@+id/button12" android:layout_alignParentEnd="true"
+            android:layout_marginEnd="39dp"/>
+    <Button
+            android:text="Demo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" android:id="@+id/button12" android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" android:layout_marginStart="46dp"/>
 
 
 </RelativeLayout>
