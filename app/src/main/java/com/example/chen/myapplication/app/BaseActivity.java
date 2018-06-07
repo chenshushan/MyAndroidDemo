@@ -13,9 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import com.example.chen.myapplication.app.bean.User;
 import com.example.chen.myapplication.app.util.PreferenceUtil;
-import com.vondear.rxtools.RxTool;
-import com.vondear.rxtools.view.dialog.RxDialog;
 import com.vondear.rxtools.view.dialog.RxDialogSure;
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.ref.WeakReference;
 
@@ -26,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     IntentFilter intentFilter;
     NetWorkBroadcastReceiver netWorkBroadcastReceiver;
+    public static EventBus eventBus  = EventBus.getDefault();
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
