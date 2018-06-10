@@ -17,6 +17,7 @@ import com.example.chen.myapplication.app.BaseActivity;
 import com.example.chen.myapplication.app.util.ToastUtil;
 import com.example.chen.myapplication.frame.eventbus.EventBusActivity;
 import com.example.chen.myapplication.frame.eventbus.event.BaseEvent;
+import com.example.chen.myapplication.frame.rxjava.RxJavaActivity;
 import com.example.chen.myapplication.layout.LayoutActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -113,5 +114,7 @@ public class MainActivity extends BaseActivity {
 
 	@OnClick(R.id.button13)
 	public void onViewClicked() {
+		Intent intent = new Intent(this, RxJavaActivity.class);
+		startActivity(intent);
 	}
 }
