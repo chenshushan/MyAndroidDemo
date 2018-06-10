@@ -74,7 +74,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 			List<String> imageUrls = news.getImageUrls();
 			String imageUrl = imageUrls == null || imageUrls.size() < 1 ? "" : imageUrls.get(0);
 			if(imageUrl !=null && !"".equals(imageUrl.trim())) {
-				System.out.println(imageUrl);
 				Picasso.with(context).load(imageUrl).error(R.mipmap.log).placeholder(R.mipmap.log).into(this.newsImage);
 			}
 		}

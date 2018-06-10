@@ -113,9 +113,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 
 		listViewFoods.setOnScrollListener(new AbsListView.OnScrollListener() {
 			@Override
-			public void onScrollStateChanged(AbsListView absListView, int i) {
-
-			}
+			public void onScrollStateChanged(AbsListView absListView, int i) {}
 			// 点击左侧滑动也会调用此方法
 			@Override
 			public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -124,7 +122,7 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 				}
 				GoodsItem goodsItem = dataList.get(firstVisibleItem);
 				if (shopTypeAdapter.selectTypeId != goodsItem.typeId) {
-					shopTypeAdapter.selectTypeId = goodsItem.typeId;
+					shopTypeAdapter.selectTypeId = goodsItem.typeId; // 设置当前选中的type
 					shopTypeAdapter.notifyDataSetChanged(); // 触发onBindViewHolder 会设置点击项的背景色
 					rvType.smoothScrollToPosition(getSelectedGroupPosition(goodsItem.typeId));
 				}
@@ -319,7 +317,6 @@ public class ShopDetailActivity extends BaseActivity implements View.OnClickList
 		rvSelected.setLayoutManager(new LinearLayoutManager(this));
 		selectedAdapter = new GoodsSelectedAdapter(this, selectedList);
 		rvSelected.setAdapter(selectedAdapter);
-
 
 		TextView clear = (TextView) view.findViewById(R.id.clear);
 		clear.setOnClickListener(this);

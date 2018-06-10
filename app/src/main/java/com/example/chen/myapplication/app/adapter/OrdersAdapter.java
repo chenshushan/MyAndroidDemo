@@ -225,6 +225,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 			public void onFinish() {
 				updateOrderStatus(3, position);
 				down.setVisibility(View.GONE);
+				this.cancel();
 			}
 		}
 	}

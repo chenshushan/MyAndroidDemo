@@ -105,43 +105,4 @@ public class RestApiClient {
         return getRetrofit().create(clazz);
     }
 
-    public Api createApi(){
-        Api api = getRetrofit().create(Api.class);
-        return api;
-    }
-    public interface Api {
-        @GET("top250")
-        Observable<Map> listTop250(@Query("start") int start, @Query("count") int count);
-        @GET("/news/qihoo")
-        Observable<BaseResult<List<News>>> getNews(@Query("apikey") String apikey, @Query("site") String site, @Query("kw") String kw, @Query("pageToken") String pageToken);
-    }
-//    private <T> T getByProxy(Class<T> clazz) {
-//        T t = get(clazz);
-//        return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[] { clazz },
-//                new ResponseErrorProxy(t, this));
-//    }
-//
-//    public TokenService tokenService() {
-//        return getByProxy(TokenService.class);
-//    }
-//
-//    public AccountService accountService() {
-//        return getByProxy(AccountService.class);
-//    }
-//
-//    public AddressService addressService() {
-//        return getByProxy(AddressService.class);
-//    }
-//
-//    public BusinessService businessService() {
-//        return getByProxy(BusinessService.class);
-//    }
-//
-//    public OrderService orderService() {
-//        return getByProxy(OrderService.class);
-//    }
-//
-//    public CommonService commonService() {
-//        return getByProxy(CommonService.class);
-//    }
 }

@@ -38,8 +38,7 @@ public class RxJavaActivity extends AppCompatActivity {
 				e.onNext("hello RxJava");
 				e.onComplete();
 			}
-		})
-				.subscribeOn(Schedulers.newThread())
+		}).subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<String>() {
 			@Override

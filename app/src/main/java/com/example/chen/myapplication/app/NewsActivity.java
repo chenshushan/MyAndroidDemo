@@ -80,13 +80,10 @@ public class NewsActivity extends BaseActivity {
 
  	public void initNews(final boolean isAppend){
 		RetrofitService retrofitService = RetrofitFactory.getInstance();
-//&kw=%e7%be%8e%e9%a3%9f&site=baidu.com";
-		final Observable<BaseResult<List<News>>> news = retrofitService.getNews( "qq.com",
-				"美食", newsAdapter.getPage() + "");
+		final Observable<BaseResult<List<News>>> news = retrofitService.getNews( "qq.com", "美食", newsAdapter.getPage() + "");
 		news.subscribeOn(Schedulers.io()).map(new Function<BaseResult<List<News>>, List<News>>() {
 			@Override
 			public List<News> apply(BaseResult<List<News>> baseResult)  {
-				System.out.println(baseResult.getRetcode());
 				return baseResult.getData();
 			}
 		}).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<News>>() {

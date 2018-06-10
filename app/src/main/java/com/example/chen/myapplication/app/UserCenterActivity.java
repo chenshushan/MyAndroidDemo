@@ -67,6 +67,13 @@ public class UserCenterActivity extends BaseActivity {
 		phone.setText(user.getPhone());
 		sex.setText(user.getSex());
 
+		String avatar = PreferenceUtil.getString("AVATAR");
+		if(avatar == null || "".equals(avatar.trim())){
+
+		}else {
+			Uri uri = Uri.parse(avatar);
+			Picasso.with(this).load(uri).error(R.mipmap.log).placeholder(R.mipmap.log).transform(new CircleTransform()).into(ivAvatar);
+		}
 
 	}
 	@OnClick({R.id.iv_avatar})
@@ -141,7 +148,7 @@ public class UserCenterActivity extends BaseActivity {
 				if (resultCode == RESULT_OK) {
 					resultUri = UCrop.getOutput(data);
 					roadImageView(resultUri, ivAvatar);
-					RxSPTool.putContent(this, "AVATAR", resultUri.toString());
+					PreferenceUtil.set("AVATAR", resultUri.toString()); // 存储图片路径
 				} else if (resultCode == UCrop.RESULT_ERROR) {
 					final Throwable cropError = UCrop.getError(data);
 				}

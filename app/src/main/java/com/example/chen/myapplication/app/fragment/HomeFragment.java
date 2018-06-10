@@ -94,7 +94,9 @@ public class HomeFragment extends Fragment implements HomeAdapter.OnItemClickLis
 					int totalItemCount = manager.getItemCount();
 					if (lastItem == totalItemCount - 1) { // 滚动到最后一项时加载数据
 //						bdLocation = myLocationListener.getBdLocation();
-						BDMapUtil.getInstance().searchNeayBy(bdLocation, new MyOnGetPoiSearchResultListener(homeAdapter),"美食", page++);
+						// 用周边结果初始化店铺数据
+						MyOnGetPoiSearchResultListener poiSearchResultListener = new MyOnGetPoiSearchResultListener(homeAdapter);
+						BDMapUtil.getInstance().searchNeayBy(bdLocation, poiSearchResultListener,"美食", page++);
 					}
 
 				}
