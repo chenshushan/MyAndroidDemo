@@ -1,6 +1,7 @@
 package com.example.chen.myapplication.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.example.chen.myapplication.R;
+import com.example.chen.myapplication.app.WebViewActivity;
 import com.example.chen.myapplication.app.bean.News;
 import com.example.chen.myapplication.app.util.ToastUtil;
 import com.squareup.picasso.Picasso;
@@ -81,7 +83,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 		public void onViewClicked(View view) {
 			String url = news.getUrl();
 			// 打开网址
-			ToastUtil.showToast(url);
+			Intent intent = new Intent(context, WebViewActivity.class);
+			intent.putExtra("url", url);
+			context.startActivity(intent);
 		}
 
 	}
