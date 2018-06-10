@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +31,8 @@ public class MainActivity extends BaseActivity {
 	Button app;
 	@BindView(R.id.button12)
 	Button demo;
+	@BindView(R.id.button13)
+	Button rxJava;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +87,6 @@ public class MainActivity extends BaseActivity {
 	}
 
 
-
 	@OnClick(R.id.button11)
 	public void onAppClicked() {
 		Intent intent = new Intent(this, AppActivity.class);
@@ -105,9 +105,13 @@ public class MainActivity extends BaseActivity {
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	public void getText(BaseEvent<List<String>> baseEvent){
+	public void getText(BaseEvent<List<String>> baseEvent) {
 		List<String> data = baseEvent.getData();
 		String s = data.get(0);
 		ToastUtil.showToast(s);
+	}
+
+	@OnClick(R.id.button13)
+	public void onViewClicked() {
 	}
 }

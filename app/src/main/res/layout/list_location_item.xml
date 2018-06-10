@@ -17,7 +17,7 @@
                 android:id="@+id/txt_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="王宏"
+                tools:text="重庆邮电大学"
                 android:textSize="18sp"
                 android:textColor="#424242" />
         <TextView

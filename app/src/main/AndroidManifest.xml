@@ -130,6 +130,8 @@
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".frame.eventbus.EventBusActivity">
         </activity>
+        <activity android:name=".app.NewsActivity">
+        </activity>
     </application>
 
 </manifest>

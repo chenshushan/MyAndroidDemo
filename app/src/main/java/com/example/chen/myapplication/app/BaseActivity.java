@@ -23,6 +23,7 @@ import static com.example.chen.myapplication.app.bean.User.USER_INFO;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+
     IntentFilter intentFilter;
     NetWorkBroadcastReceiver netWorkBroadcastReceiver;
     public static EventBus eventBus  = EventBus.getDefault();
