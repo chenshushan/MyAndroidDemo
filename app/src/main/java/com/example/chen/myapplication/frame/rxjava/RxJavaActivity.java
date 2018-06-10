@@ -30,11 +30,11 @@ public class RxJavaActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_rx_java);
 		ButterKnife.bind(this);
-		two.setText("子线程休眠15秒");
+		two.setText("子线程休眠5秒");
 		Observable.create(new ObservableOnSubscribe<String>() {
 			@Override
 			public void subscribe(ObservableEmitter<String> e) throws Exception {
-				Thread.sleep(15*1000);
+				Thread.sleep(5*1000);
 				e.onNext("hello RxJava");
 				e.onComplete();
 			}

@@ -106,7 +106,7 @@ public class MainActivity extends BaseActivity {
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	public void getText(BaseEvent<List<String>> baseEvent) {
+	public void getText(BaseEvent<List<String>> baseEvent)   {
 		List<String> data = baseEvent.getData();
 		String s = data.get(0);
 		ToastUtil.showToast(s);
