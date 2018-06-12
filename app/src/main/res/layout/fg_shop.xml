@@ -5,21 +5,25 @@
     <!--分隔线-->
     <View android:id="@+id/shop_fenge" android:layout_width="match_parent" android:layout_height="1dp"
           android:background="@color/color_fengexian"></View>
-    <LinearLayout android:layout_width="100dp" android:layout_height="100dp" android:orientation="vertical" android:id="@+id/ll_shop_icon" android:gravity="center_vertical">
+    <LinearLayout android:layout_width="100dp" android:layout_height="100dp" android:orientation="vertical"
+                  android:id="@+id/ll_shop_icon" android:gravity="center_vertical">
         <!--商品图片-->
         <ImageView android:layout_width="90dp" android:layout_height="70dp" android:id="@+id/iv_shop_icon"
-                   android:layout_below="@+id/shop_fenge"   android:layout_marginLeft="10dp"
+                   android:layout_below="@+id/shop_fenge" android:layout_marginLeft="10dp"
                    android:src="@mipmap/log" android:scaleType="center"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/ll_title"
+                  android:layout_toRightOf="@+id/ll_shop_icon" android:layout_marginLeft="5dp">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:text="黄焖鸡" android:textColor="#000" android:lines="1" android:id="@+id/tv_shop_title"
+                  android:maxEms="6" android:textSize="18sp" android:ellipsize="end"/>
     </LinearLayout>
 
     <!--商品信息-->
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:layout_alignTop="@+id/ll_shop_icon" android:layout_toRightOf="@+id/ll_shop_icon"
+                  android:layout_below="@+id/ll_title" android:layout_toRightOf="@+id/ll_shop_icon"
                   android:layout_marginLeft="5dp" android:orientation="vertical">
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="黄焖鸡" android:textColor="#000" android:lines="1" android:id="@+id/tv_shop_title"
-                  android:maxEms="6" android:textSize="18sp" android:ellipsize="end"/>
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:id="@+id/tv_shop_sell" android:layout_marginTop="4dp"
@@ -49,6 +53,7 @@
 
 
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_below="@+id/ll_title"
                   android:layout_alignParentRight="true" android:layout_marginRight="10dp"
                   android:gravity="right" android:orientation="vertical">
         <!--起送-->
